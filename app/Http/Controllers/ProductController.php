@@ -2,36 +2,43 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
+use App\DTOs\ProductData;
+use App\Http\Requests\StoreProductRequest;
+use App\Http\Requests\UpdateProductRequest;
 use App\Models\Product;
+use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class ProductController extends Controller
 {
     /**
      * Display a listing of products with stats and filters.
      */
-    public function index(Request $request)
+    public function index(Request $request): Response
     {
         $query = Product::query();
+        $filters = [
+            'search' => $request->string('search')->toString(),
+            'category' => $request->string('category')->toString() ?: 'All',
+        ];
 
-        // Search filter
-        if ($request->filled('search')) {
-            $query->where('name', 'ilike', '%' . $request->search . '%')
-                  ->orWhere('description', 'ilike', '%' . $request->search . '%');
+        if ($filters['search'] !== '') {
+            $query->where(function ($q) use ($filters) {
+                $q->where('name', 'like', '%' . $filters['search'] . '%')
+                  ->orWhere('description', 'like', '%' . $filters['search'] . '%');
+            });
         }
 
-        // Category filter
-        if ($request->filled('category') && $request->category !== 'All') {
-            $query->where('category', $request->category);
+        if ($filters['category'] !== 'All') {
+            $query->where('category', $filters['category']);
         }
 
-        // Fetch products
         $products = $query->orderBy('is_featured', 'desc')
                           ->orderBy('created_at', 'desc')
                           ->get();
 
-        // Computed Stats for the Dashboard
         $stats = [
             'total_products' => Product::count(),
             'avg_price' => round(Product::avg('price') ?? 0, 2),
@@ -41,60 +48,43 @@ class ProductController extends Controller
 
         $categories = ['Coffee', 'Tea & Beverages', 'Pastries', 'Coffee Beans'];
 
-        return view('products.index', compact('products', 'stats', 'categories'));
+        return Inertia::render('Products/Index', [
+            'products' => $products
+                ->map(fn (Product $product) => ProductData::fromModel($product)->toArray())
+                ->values(),
+            'stats' => $stats,
+            'categories' => $categories,
+            'filters' => $filters,
+        ]);
     }
 
     /**
      * Store a newly created product.
      */
-    public function store(Request $request)
+    public function store(StoreProductRequest $request): RedirectResponse
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'category' => 'required|string|in:Coffee,Tea & Beverages,Pastries,Coffee Beans',
-            'price' => 'required|numeric|min:0.01',
-            'stock' => 'required|integer|min:0',
-            'description' => 'nullable|string',
-            'image_url' => 'nullable|url',
-            'is_featured' => 'sometimes|boolean',
-        ]);
+        Product::create($request->toDTO()->toArray());
 
-        $validated['is_featured'] = $request->has('is_featured');
-
-        Product::create($validated);
-
-        return redirect()->route('products.index')->with('success', 'Product created successfully!');
+        return redirect()->route('products.index')->with('success', __('product.created'));
     }
 
     /**
      * Update the specified product.
      */
-    public function update(Request $request, Product $product)
+    public function update(UpdateProductRequest $request, Product $product): RedirectResponse
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'category' => 'required|string|in:Coffee,Tea & Beverages,Pastries,Coffee Beans',
-            'price' => 'required|numeric|min:0.01',
-            'stock' => 'required|integer|min:0',
-            'description' => 'nullable|string',
-            'image_url' => 'nullable|url',
-            'is_featured' => 'sometimes|boolean',
-        ]);
+        $product->update($request->toDTO()->toArray());
 
-        $validated['is_featured'] = $request->has('is_featured');
-
-        $product->update($validated);
-
-        return redirect()->route('products.index')->with('success', 'Product updated successfully!');
+        return redirect()->route('products.index')->with('success', __('product.updated'));
     }
 
     /**
      * Remove the specified product.
      */
-    public function destroy(Product $product)
+    public function destroy(Product $product): RedirectResponse
     {
         $product->delete();
 
-        return redirect()->route('products.index')->with('success', 'Product deleted successfully!');
+        return redirect()->route('products.index')->with('success', __('product.deleted'));
     }
 }

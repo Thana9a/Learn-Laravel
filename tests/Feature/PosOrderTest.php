@@ -34,7 +34,7 @@ class PosOrderTest extends TestCase
         );
     }
 
-    public function test_authenticated_dashboard_renders_pos_menu_screen()
+    public function test_authenticated_dashboard_renders_dashboard_screen()
     {
         $user = User::factory()->create();
 
@@ -49,8 +49,9 @@ class PosOrderTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertInertia(fn ($page) => $page
-            ->component('Pos/Menu/Index')
-            ->has('products', 1)
+            ->component('Dashboard')
+            ->has('recentOrders')
+            ->has('stats')
         );
     }
 

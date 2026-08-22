@@ -1,0 +1,31 @@
+const auth = {
+  title: 'Authentication',
+  login: 'Log In',
+  login_title: 'Sign in to your account',
+  register: 'Register',
+  register_title: 'Create a new account',
+  logout: 'Log Out',
+  email: 'Email Address',
+  password: 'Password',
+  password_confirmation: 'Confirm Password',
+  remember_me: 'Remember Me',
+  forgot_password: 'Forgot your password?',
+  reset_password: 'Reset Password',
+  send_reset_link: 'Email Password Reset Link',
+  already_registered: 'Already registered?',
+  dont_have_account: "Don't have an account?",
+  name: 'Full Name',
+  profile: 'Profile Settings',
+  profile_information: 'Profile Information',
+  update_password: 'Update Password',
+  current_password: 'Current Password',
+  new_password: 'New Password',
+  messages: {
+    logged_in: 'Logged in successfully.',
+    logged_out: 'Logged out successfully.',
+    password_updated: 'Password has been updated.',
+    profile_updated: 'Profile information has been updated.',
+  },
+} as const;
+
+export default auth;

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\GenerateReportRequest;
 use App\Models\Report;
 use App\Repositories\ReportRepositoryInterface;
 use App\Services\ReportService;
@@ -54,21 +55,18 @@ class ReportController extends Controller
      * Handle the "Generate Report" form submission.
      * Creates a pending report and dispatches the job.
      */
-    public function store(Request $request): RedirectResponse
+    public function store(GenerateReportRequest $request): RedirectResponse
     {
-        $validated = $request->validate([
-            'title' => ['nullable', 'string', 'max:100'],
-            'type'  => ['nullable', 'string', 'in:sales,inventory,performance'],
-        ]);
+        $reportData = $request->toDTO();
 
         $this->reportService->generate(
             userId: $request->user()->id,
-            title:  $validated['title'] ?? 'Sales Report — ' . now()->format('d M Y H:i'),
-            type:   $validated['type']  ?? 'sales',
+            title:  $reportData->title,
+            type:   $reportData->type,
         );
 
         return redirect()->route('reports.index')
-                         ->with('success', 'Report is being generated! Check back in a moment.');
+                         ->with('success', __('report.queued'));
     }
 
     // ─── Show ──────────────────────────────────────────────────────────────────

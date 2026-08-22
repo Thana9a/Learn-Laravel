@@ -1,0 +1,43 @@
+<?php
+
+return [
+    'actions' => [
+        'create' => 'Create',
+        'add' => 'Add',
+        'edit' => 'Edit',
+        'update' => 'Update',
+        'delete' => 'Delete',
+        'save' => 'Save',
+        'cancel' => 'Cancel',
+        'back' => 'Back',
+        'search' => 'Search',
+        'filter' => 'Filter',
+        'reset' => 'Reset',
+        'export' => 'Export',
+        'import' => 'Import',
+        'print' => 'Print',
+        'refresh' => 'Refresh',
+        'close' => 'Close',
+        'submit' => 'Submit',
+        'confirm' => 'Confirm',
+    ],
+    'status' => [
+        'active' => 'Active',
+        'inactive' => 'Inactive',
+        'pending' => 'Pending',
+        'processing' => 'Processing',
+        'completed' => 'Completed',
+        'cancelled' => 'Cancelled',
+        'failed' => 'Failed',
+        'success' => 'Success',
+        'draft' => 'Draft',
+    ],
+    'messages' => [
+        'created_success' => ':resource created successfully.',
+        'updated_success' => ':resource updated successfully.',
+        'deleted_success' => ':resource deleted successfully.',
+        'not_found' => ':resource not found.',
+        'unauthorized' => 'You are not authorized to perform this action.',
+        'server_error' => 'An internal server error occurred. Please try again later.',
+    ],
+];

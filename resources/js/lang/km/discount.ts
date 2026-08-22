@@ -1,0 +1,55 @@
+const discount = {
+  title: 'ការបញ្ចុះតម្លៃ',
+  discount_list: 'បញ្ជីការបញ្ចុះតម្លៃ',
+  add_discount: 'បន្ថែមការបញ្ចុះតម្លៃ',
+  edit_discount: 'កែសម្រួលការបញ្ចុះតម្លៃ',
+  delete_discount: 'លុបការបញ្ចុះតម្លៃ',
+  fields: {
+    name: 'ឈ្មោះកម្មវិធីបញ្ចុះតម្លៃ',
+    code: 'លេខកូដបញ្ចុះតម្លៃ',
+    type: 'ប្រភេទបញ្ចុះតម្លៃ',
+    value: 'តម្លៃបញ្ចុះ',
+    usage_limit: 'ចំនួនកំណត់នៃការប្រើ',
+    used_count: 'ចំនួនបានប្រើប្រាស់',
+    start_date: 'កាលបរិច្ឆេទចាប់ផ្តើម',
+    end_date: 'កាលបរិច្ឆេទបញ្ចប់',
+    is_active: 'ស្ថានភាព',
+    scope: 'អនុវត្តចំពោះ',
+    scope_type: 'ប្រភេទវិសាលភាព',
+    all_products: 'គ្រប់ទំនិញទាំងអស់',
+    specific_products: 'ទំនិញជាក់លាក់',
+    specific_categories: 'ប្រភេទជាក់លាក់',
+  },
+  types: {
+    percentage: 'ភាគរយ (%)',
+    fixed: 'ទឹកប្រាក់ថេរ ($)',
+  },
+  placeholders: {
+    name: 'ឧ. បញ្ចុះតម្លៃរដូវក្តៅ 10%',
+    code: 'ឧ. SUMMER10',
+    value: '0.00',
+    usage_limit: 'ទុកនៅទំនេរសម្រាប់មិនកំណត់',
+    search: 'ស្វែងរកតាមឈ្មោះ ឬលេខកូដ...',
+  },
+  status: {
+    active: 'សកម្ម',
+    inactive: 'អសកម្ម',
+    expired: 'ផុតកំណត់',
+    scheduled: 'តាមកាលវិភាគ',
+  },
+  apply: {
+    promo_code: 'លេខកូដប្រូម៉ូសិន',
+    enter_code: 'បញ្ចូលលេខកូដ',
+    apply_button: 'អនុវត្ត',
+    applied: 'បានអនុវត្តការបញ្ចុះតម្លៃ',
+    invalid_code: 'លេខកូដមិនត្រឹមត្រូវ ឬផុតកំណត់។',
+    removed: 'បានដកការបញ្ចុះតម្លៃចេញ។',
+  },
+  messages: {
+    created: 'បានបង្កើតការបញ្ចុះតម្លៃដោយជោគជ័យ។',
+    updated: 'បានកែប្រែការបញ្ចុះតម្លៃដោយជោគជ័យ។',
+    deleted: 'បានលុបការបញ្ចុះតម្លៃដោយជោគជ័យ។',
+  },
+} as const;
+
+export default discount;

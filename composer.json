@@ -11,9 +11,12 @@
         "laravel/framework": "^13.8",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^3.0",
-        "tightenco/ziggy": "^2.0"
+        "spatie/laravel-data": "^4.23",
+        "tightenco/ziggy": "^2.6",
+        "wildside/userstamps": "^4.0"
     },
     "require-dev": {
+        "barryvdh/laravel-ide-helper": "^3.7",
         "fakerphp/faker": "^1.23",
         "laravel/breeze": "^2.4",
         "laravel/pail": "^1.2.5",

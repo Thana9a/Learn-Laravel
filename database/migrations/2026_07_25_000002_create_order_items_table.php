@@ -20,6 +20,7 @@ return new class extends Migration
             $table->unsignedInteger('quantity')->default(1);
             $table->decimal('subtotal', 10, 2);
             $table->timestamps();
+            $table->decimal('discount_amount', 10, 2)->default(0);
         });
     }
 

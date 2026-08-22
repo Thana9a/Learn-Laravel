@@ -26,17 +26,17 @@ function handleRemove() {
 </script>
 
 <template>
-    <div class="py-3 border-b border-dashed border-pos-cream-dim/30 last:border-b-0 space-y-2 group">
+    <div class="py-3 border-b border-dashed border-neutral-200 last:border-b-0 space-y-2 group">
         <!-- Item Name, Category & Remove Action -->
         <div class="flex items-start justify-between gap-2">
             <div class="flex-1 min-w-0">
-                <h4 class="font-display font-semibold text-sm text-pos-cream truncate">
+                <h4 class="font-display font-semibold text-sm text-neutral-900 truncate">
                     {{ item.product.name }}
                 </h4>
-                <div class="flex items-center gap-2 text-xs text-pos-cream-dim font-mono">
+                <div class="flex items-center gap-2 text-xs text-neutral-500 font-mono">
                     <span>${{ Number(item.product.price).toFixed(2) }} ea</span>
-                    <span class="text-pos-cream-dim/50">•</span>
-                    <span :class="item.product.stock <= 5 ? 'text-pos-rust' : 'text-pos-cream-dim'">
+                    <span class="text-neutral-300">•</span>
+                    <span :class="item.product.stock <= 5 ? 'text-danger-600' : 'text-neutral-500'">
                         max {{ item.product.stock }}
                     </span>
                 </div>
@@ -46,7 +46,7 @@ function handleRemove() {
             <button
                 type="button"
                 @click="handleRemove"
-                class="text-pos-rust hover:opacity-80 p-1 rounded-lg transition-all focus-visible:ring-2 focus-visible:ring-pos-crema"
+                class="text-danger-500 hover:text-danger-600 hover:bg-danger-50 p-1 rounded-lg transition-colors focus-visible:ring-2 focus-visible:ring-danger-500"
                 title="Remove item"
                 aria-label="Remove item"
             >
@@ -65,7 +65,7 @@ function handleRemove() {
                 @update:model-value="handleQuantityChange"
             />
 
-            <div class="font-mono font-bold text-sm text-pos-crema tracking-tight">
+            <div class="font-mono font-bold text-sm text-primary-600 tracking-tight">
                 ${{ subtotal }}
             </div>
         </div>
