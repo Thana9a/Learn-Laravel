@@ -1,0 +1,55 @@
+const discount = {
+  title: 'Discounts',
+  discount_list: 'Discount List',
+  add_discount: 'Add Discount',
+  edit_discount: 'Edit Discount',
+  delete_discount: 'Delete Discount',
+  fields: {
+    name: 'Discount Name',
+    code: 'Promo Code',
+    type: 'Discount Type',
+    value: 'Value',
+    usage_limit: 'Usage Limit',
+    used_count: 'Times Used',
+    start_date: 'Start Date',
+    end_date: 'End Date',
+    is_active: 'Status',
+    scope: 'Applies To',
+    scope_type: 'Scope Type',
+    all_products: 'All Products',
+    specific_products: 'Specific Products',
+    specific_categories: 'Specific Categories',
+  },
+  types: {
+    percentage: 'Percentage (%)',
+    fixed: 'Fixed Amount ($)',
+  },
+  placeholders: {
+    name: 'e.g. Summer Sale 10%',
+    code: 'e.g. SUMMER10',
+    value: '0.00',
+    usage_limit: 'Leave blank for unlimited',
+    search: 'Search discounts by name or code...',
+  },
+  status: {
+    active: 'Active',
+    inactive: 'Inactive',
+    expired: 'Expired',
+    scheduled: 'Scheduled',
+  },
+  apply: {
+    promo_code: 'Promo Code',
+    enter_code: 'Enter promo code',
+    apply_button: 'Apply',
+    applied: 'Discount applied',
+    invalid_code: 'Invalid or expired promo code.',
+    removed: 'Discount removed.',
+  },
+  messages: {
+    created: 'Discount created successfully.',
+    updated: 'Discount updated successfully.',
+    deleted: 'Discount deleted successfully.',
+  },
+} as const;
+
+export default discount;

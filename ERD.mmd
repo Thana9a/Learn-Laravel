@@ -1,0 +1,122 @@
+erDiagram
+    USERS ||--o{ ORDERS : "takes (staff)"
+    USERS ||--o{ REPORTS : "generates"
+    ORDERS ||--|{ ORDER_ITEMS : "contains"
+    PRODUCTS ||--o{ ORDER_ITEMS : "ordered as"
+    ORDERS ||--o{ PAYMENTS : "paid by"
+    ORDERS ||--o{ ORDER_DISCOUNTS : "discounted by"
+    DISCOUNTS ||--o{ ORDER_DISCOUNTS : "applied in"
+    DISCOUNTS ||--o{ DISCOUNT_SCOPES : "scoped to"
+    PRODUCTS ||--o{ DISCOUNT_SCOPES : "scoped by (polymorphic)"
+
+    USERS {
+        bigint id PK
+        string name
+        string email UK
+        timestamp email_verified_at
+        string password
+        string remember_token
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    PRODUCTS {
+        bigint id PK
+        string name
+        string category
+        decimal price
+        int stock
+        text description
+        string image_url
+        boolean is_featured
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    ORDERS {
+        bigint id PK
+        string order_number UK
+        string status
+        decimal total_amount
+        bigint staff_id FK
+        string customer_name
+        text notes
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    ORDER_ITEMS {
+        bigint id PK
+        bigint order_id FK
+        bigint product_id FK
+        string product_name
+        decimal unit_price
+        int quantity
+        decimal subtotal
+        decimal discount_amount
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    PAYMENTS {
+        bigint id PK
+        bigint order_id FK
+        string provider
+        decimal amount
+        json meta_data
+        string status
+        string transaction_id UK
+        timestamp paid_at
+        timestamp expires_at
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    DISCOUNTS {
+        bigint id PK
+        string name
+        string code UK
+        string type
+        decimal value
+        int usage_limit
+        int used_count
+        timestamp start_date
+        timestamp end_date
+        boolean is_active
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    DISCOUNT_SCOPES {
+        bigint id PK
+        string scopeable_type
+        bigint scopeable_id
+        bigint discount_id FK
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    ORDER_DISCOUNTS {
+        bigint id PK
+        bigint order_id FK
+        bigint discount_id FK
+        string code_used
+        decimal amount_applied
+        string type
+        decimal value
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    REPORTS {
+        bigint id PK
+        bigint user_id FK
+        string title
+        string type
+        string status
+        json result
+        text error_message
+        timestamp generated_at
+        timestamp created_at
+        timestamp updated_at
+    }

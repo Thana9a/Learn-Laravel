@@ -21,10 +21,9 @@ const stockRatio = computed(() => {
 });
 
 const gaugeColorClass = computed(() => {
-    if (props.product.stock <= 0) return 'bg-pos-rust';
-    if (props.product.stock <= 5) return 'bg-pos-rust';
-    if (props.product.stock <= 15) return 'bg-pos-copper';
-    return 'bg-pos-crema';
+    if (stockRatio.value > 50) return 'bg-success-500';
+    if (stockRatio.value > 20) return 'bg-warning-500';
+    return 'bg-danger-500';
 });
 
 function handleCardClick() {
@@ -36,19 +35,15 @@ function handleCardClick() {
 
 <template>
     <div
-        @click="handleCardClick"
-        :class="[
-            'group relative flex flex-col bg-pos-surface rounded-xl overflow-hidden border border-pos-surface2 transition-all duration-150 select-none',
-            isOutOfStock
-                ? 'grayscale opacity-50 cursor-not-allowed'
-                : 'cursor-pointer hover:bg-pos-surface2 active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-pos-crema'
-        ]"
+        @click="emit('add', product)"
+        class="group relative flex flex-col bg-white rounded-xl border border-neutral-200 overflow-hidden cursor-pointer select-none active:scale-95 active:bg-neutral-50 transition-transform shadow-sm"
+        :class="{ 'opacity-60 grayscale-[0.5] pointer-events-none': isOutOfStock }"
         tabindex="0"
         @keydown.enter.prevent="handleCardClick"
         @keydown.space.prevent="handleCardClick"
     >
         <!-- Product Image & Badges Container -->
-        <div class="relative w-full h-36 bg-pos-surface2 overflow-hidden">
+        <div class="relative w-full h-36 bg-neutral-100 overflow-hidden">
             <img
                 v-if="product.image_url"
                 :src="product.image_url"
@@ -57,10 +52,10 @@ function handleCardClick() {
                 loading="lazy"
             />
             <div
-                v-else
-                class="w-full h-full flex items-center justify-center text-pos-cream-dim"
+                v-if="!product.image_url"
+                class="absolute inset-0 bg-neutral-100 flex items-center justify-center text-neutral-300"
             >
-                <svg class="w-12 h-12 stroke-current" fill="none" viewBox="0 0 24 24">
+                <svg class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M18.364 5.636l-3.536 3.536m0 0a5 5 0 107.072 7.072 5 5 0 00-7.072-7.072zm0 0L12 12m-6 4a4 4 0 118 0 4 4 0 01-8 0z" />
                 </svg>
             </div>
@@ -69,7 +64,7 @@ function handleCardClick() {
             <div class="absolute top-2.5 left-2.5 right-2.5 flex items-center justify-between pointer-events-none">
                 <span
                     v-if="product.is_featured"
-                    class="bg-pos-crema text-pos-bg text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-lg shadow-sm"
+                    class="bg-primary-500 text-white text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-lg shadow-sm"
                 >
                     Featured
                 </span>
@@ -78,14 +73,14 @@ function handleCardClick() {
                 <!-- Out of stock badge -->
                 <span
                     v-if="isOutOfStock"
-                    class="bg-pos-bg/80 border border-pos-rust text-pos-rust text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-lg backdrop-blur-xs"
+                    class="bg-white/80 border border-danger-500 text-danger-600 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-lg backdrop-blur-sm"
                 >
                     Sold Out
                 </span>
                 <!-- Cart Quantity indicator if present in cart -->
                 <span
                     v-else-if="cartQuantity && cartQuantity > 0"
-                    class="bg-pos-crema text-pos-bg font-mono font-bold text-xs px-2 py-0.5 rounded-lg shadow-md"
+                    class="bg-primary-500 text-white font-mono font-bold text-xs px-2 py-0.5 rounded-lg shadow-md"
                 >
                     {{ cartQuantity }} in cart
                 </span>
@@ -95,33 +90,33 @@ function handleCardClick() {
         <!-- Product Info Body -->
         <div class="flex-1 p-3.5 flex flex-col justify-between">
             <div>
-                <div class="text-xs text-pos-cream-dim uppercase tracking-wider font-semibold mb-0.5">
+                <div class="text-xs text-neutral-500 uppercase tracking-wider font-semibold mb-0.5">
                     {{ product.category }}
                 </div>
-                <h3 class="font-display font-semibold text-pos-cream text-base leading-snug line-clamp-1">
+                <h3 class="font-display font-semibold text-neutral-900 text-base leading-snug line-clamp-1">
                     {{ product.name }}
                 </h3>
                 <p
                     v-if="product.description"
-                    class="text-xs text-pos-cream-dim line-clamp-2 mt-1 leading-relaxed"
+                    class="text-xs text-neutral-500 line-clamp-2 mt-1 leading-relaxed"
                 >
                     {{ product.description }}
                 </p>
             </div>
 
-            <div class="mt-3 flex items-baseline justify-between pt-2 border-t border-pos-surface2/60">
-                <div class="font-display font-bold text-pos-crema text-lg">
+            <div class="mt-3 flex items-baseline justify-between pt-2 border-t border-neutral-100">
+                <div class="font-display font-bold text-primary-600 text-lg">
                     ${{ Number(product.price).toFixed(2) }}
                 </div>
-                <div class="font-mono text-xs text-pos-cream-dim">
+                <div class="font-mono text-xs text-neutral-500">
                     <span v-if="!isOutOfStock">{{ product.stock }} left</span>
-                    <span v-else class="text-pos-rust">0 stock</span>
+                    <span v-else class="text-danger-600">0 stock</span>
                 </div>
             </div>
         </div>
 
         <!-- Roast Gauge Bar (Section 0 Spec) -->
-        <div class="w-full h-1 bg-pos-surface2 overflow-hidden">
+        <div class="w-full h-1 bg-neutral-100 overflow-hidden">
             <div
                 class="h-full transition-all duration-300"
                 :class="gaugeColorClass"

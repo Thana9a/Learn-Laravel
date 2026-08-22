@@ -17,7 +17,7 @@ Route::get('/pos/menu', [PosMenuController::class, 'index'])->name('pos.menu.ind
 Route::post('/pos/orders', [OrderController::class, 'store'])->name('pos.orders.store');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/dashboard', [PosMenuController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
 });
 
 Route::middleware('auth')->group(function () {
@@ -36,5 +36,8 @@ Route::get('/products', [ProductController::class, 'index'])->name('products.ind
 Route::post('/products', [ProductController::class, 'store'])->name('products.store');
 Route::put('/products/{product}', [ProductController::class, 'update'])->name('products.update');
 Route::delete('/products/{product}', [ProductController::class, 'destroy'])->name('products.destroy');
+
+// Order routes
+Route::resource('orders', OrderController::class)->only(['index', 'show', 'store', 'destroy']);
 
 require __DIR__.'/auth.php';

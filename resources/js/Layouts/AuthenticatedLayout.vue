@@ -1,204 +1,151 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import ApplicationLogo from '@/Components/ApplicationLogo.vue';
+import { computed, ref } from 'vue';
+import { Link, usePage } from '@inertiajs/vue3';
 import Dropdown from '@/Components/Dropdown.vue';
 import DropdownLink from '@/Components/DropdownLink.vue';
-import NavLink from '@/Components/NavLink.vue';
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink.vue';
-import { Link } from '@inertiajs/vue3';
+import Sidebar from '@/Components/Sidebar.vue';
+import en from '@/lang/en';
+import { Coffee, LogOut, Menu, User, X } from 'lucide-vue-next';
 
-const showingNavigationDropdown = ref(false);
+interface AuthUser {
+    name?: string;
+    email?: string;
+}
+
+const page = usePage();
+const showingMobileSidebar = ref(false);
+const t = en.common;
+
+const authUser = computed<AuthUser | null>(() => {
+    const props = page.props as { auth?: { user?: AuthUser } };
+
+    return props.auth?.user ?? null;
+});
 </script>
 
 <template>
-    <div>
-        <div class="min-h-screen bg-gray-100">
-            <nav
-                class="border-b border-gray-100 bg-white"
-            >
-                <!-- Primary Navigation Menu -->
-                <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <div class="flex h-16 justify-between">
-                        <div class="flex">
-                            <!-- Logo -->
-                            <div class="flex shrink-0 items-center">
-                                <Link :href="route('dashboard')">
-                                    <ApplicationLogo
-                                        class="block h-9 w-auto fill-current text-gray-800"
-                                    />
-                                </Link>
-                            </div>
+    <div class="min-h-screen bg-neutral-50 text-neutral-900">
+        <div class="lg:flex">
+            <Sidebar class="hidden lg:flex lg:fixed lg:inset-y-0 lg:left-0" />
 
-                            <!-- Navigation Links -->
-                            <div
-                                class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex"
-                            >
-                                <NavLink
-                                    :href="route('dashboard')"
-                                    :active="route().current('dashboard')"
-                                >
-                                    Dashboard
-                                </NavLink>
-                                <NavLink
-                                    :href="route('reports.index')"
-                                    :active="route().current('reports.*')"
-                                >
-                                    📊 Reports
-                                </NavLink>
-                            </div>
-                        </div>
-
-                        <div class="hidden sm:ms-6 sm:flex sm:items-center">
-                            <!-- Settings Dropdown -->
-                            <div class="relative ms-3">
-                                <Dropdown align="right" width="48">
-                                    <template #trigger>
-                                        <span class="inline-flex rounded-md">
-                                            <button
-                                                type="button"
-                                                class="inline-flex items-center rounded-md border border-transparent bg-white px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out hover:text-gray-700 focus:outline-none"
-                                            >
-                                                {{ $page.props.auth.user.name }}
-
-                                                <svg
-                                                    class="-me-0.5 ms-2 h-4 w-4"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    viewBox="0 0 20 20"
-                                                    fill="currentColor"
-                                                >
-                                                    <path
-                                                        fill-rule="evenodd"
-                                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                        clip-rule="evenodd"
-                                                    />
-                                                </svg>
-                                            </button>
-                                        </span>
-                                    </template>
-
-                                    <template #content>
-                                        <DropdownLink
-                                            :href="route('profile.edit')"
-                                        >
-                                            Profile
-                                        </DropdownLink>
-                                        <DropdownLink
-                                            :href="route('logout')"
-                                            method="post"
-                                            as="button"
-                                        >
-                                            Log Out
-                                        </DropdownLink>
-                                    </template>
-                                </Dropdown>
-                            </div>
-                        </div>
-
-                        <!-- Hamburger -->
-                        <div class="-me-2 flex items-center sm:hidden">
-                            <button
-                                @click="
-                                    showingNavigationDropdown =
-                                        !showingNavigationDropdown
-                                "
-                                class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 transition duration-150 ease-in-out hover:bg-gray-100 hover:text-gray-500 focus:bg-gray-100 focus:text-gray-500 focus:outline-none"
-                            >
-                                <svg
-                                    class="h-6 w-6"
-                                    stroke="currentColor"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        :class="{
-                                            hidden: showingNavigationDropdown,
-                                            'inline-flex':
-                                                !showingNavigationDropdown,
-                                        }"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M4 6h16M4 12h16M4 18h16"
-                                    />
-                                    <path
-                                        :class="{
-                                            hidden: !showingNavigationDropdown,
-                                            'inline-flex':
-                                                showingNavigationDropdown,
-                                        }"
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M6 18L18 6M6 6l12 12"
-                                    />
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Responsive Navigation Menu -->
+            <Transition name="fade">
                 <div
-                    :class="{
-                        block: showingNavigationDropdown,
-                        hidden: !showingNavigationDropdown,
-                    }"
-                    class="sm:hidden"
+                    v-if="showingMobileSidebar"
+                    class="fixed inset-0 z-40 bg-neutral-900/50 backdrop-blur-sm lg:hidden"
+                    @click="showingMobileSidebar = false"
+                />
+            </Transition>
+
+            <Transition name="slide">
+                <div
+                    v-if="showingMobileSidebar"
+                    class="fixed inset-y-0 left-0 z-50 lg:hidden"
                 >
-                    <div class="space-y-1 pb-3 pt-2">
-                        <ResponsiveNavLink
-                            :href="route('dashboard')"
-                            :active="route().current('dashboard')"
-                        >
-                            Dashboard
-                        </ResponsiveNavLink>
-                    </div>
+                    <Sidebar />
+                </div>
+            </Transition>
 
-                    <!-- Responsive Settings Options -->
-                    <div
-                        class="border-t border-gray-200 pb-1 pt-4"
-                    >
-                        <div class="px-4">
-                            <div
-                                class="text-base font-medium text-gray-800"
+            <div class="min-h-screen flex-1 lg:pl-64">
+                <header class="sticky top-0 z-30 border-b border-neutral-200 bg-white/95 backdrop-blur">
+                    <div class="flex h-16 items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
+                        <div class="flex items-center gap-3">
+                            <button
+                                type="button"
+                                class="inline-flex h-10 w-10 items-center justify-center rounded-lg text-neutral-500 transition-colors hover:bg-neutral-100 hover:text-neutral-900 lg:hidden"
+                                aria-label="Open navigation"
+                                @click="showingMobileSidebar = true"
                             >
-                                {{ $page.props.auth.user.name }}
-                            </div>
-                            <div class="text-sm font-medium text-gray-500">
-                                {{ $page.props.auth.user.email }}
-                            </div>
+                                <Menu class="h-5 w-5" />
+                            </button>
+
+                            <Link :href="route('dashboard')" class="flex items-center gap-3 lg:hidden">
+                                <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-primary-500 text-white shadow-sm">
+                                    <Coffee class="h-5 w-5" />
+                                </span>
+                                <span class="text-sm font-semibold text-neutral-900">Coffee POS</span>
+                            </Link>
+
+                            <slot name="header" />
                         </div>
 
-                        <div class="mt-3 space-y-1">
-                            <ResponsiveNavLink :href="route('profile.edit')">
-                                Profile
-                            </ResponsiveNavLink>
-                            <ResponsiveNavLink
-                                :href="route('logout')"
-                                method="post"
-                                as="button"
+                        <div class="flex items-center gap-3">
+                            <Link
+                                :href="route('pos.index')"
+                                class="hidden items-center gap-2 rounded-lg bg-primary-500 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-primary-600 active:bg-primary-700 sm:inline-flex"
                             >
-                                Log Out
-                            </ResponsiveNavLink>
+                                <Coffee class="h-4 w-4" />
+                                {{ t.nav.pos }}
+                            </Link>
+
+                            <Dropdown v-if="authUser" align="right" width="48">
+                                <template #trigger>
+                                    <button
+                                        type="button"
+                                        class="inline-flex items-center gap-2 rounded-lg border border-neutral-200 bg-white px-3 py-2 text-sm font-medium text-neutral-700 transition-colors hover:bg-neutral-100"
+                                    >
+                                        <span class="flex h-7 w-7 items-center justify-center rounded-full bg-neutral-100 text-xs font-semibold text-neutral-700">
+                                            {{ authUser.name ? authUser.name.charAt(0).toUpperCase() : 'U' }}
+                                        </span>
+                                        <span class="hidden max-w-32 truncate sm:inline">{{ authUser.name }}</span>
+                                    </button>
+                                </template>
+
+                                <template #content>
+                                    <DropdownLink :href="route('profile.edit')">
+                                        <span class="inline-flex items-center gap-2">
+                                            <User class="h-4 w-4" />
+                                            {{ t.nav.profile }}
+                                        </span>
+                                    </DropdownLink>
+                                    <DropdownLink
+                                        :href="route('logout')"
+                                        method="post"
+                                        as="button"
+                                    >
+                                        <span class="inline-flex items-center gap-2">
+                                            <LogOut class="h-4 w-4" />
+                                            {{ t.nav.logout }}
+                                        </span>
+                                    </DropdownLink>
+                                </template>
+                            </Dropdown>
                         </div>
                     </div>
-                </div>
-            </nav>
+                </header>
 
-            <!-- Page Heading -->
-            <header
-                class="bg-white shadow"
-                v-if="$slots.header"
-            >
-                <div class="mx-auto max-w-7xl px-4 py-6 sm:px-6 lg:px-8">
-                    <slot name="header" />
-                </div>
-            </header>
-
-            <!-- Page Content -->
-            <main>
-                <slot />
-            </main>
+                <main>
+                    <slot />
+                </main>
+            </div>
         </div>
+
+        <button
+            v-if="showingMobileSidebar"
+            type="button"
+            class="fixed right-4 top-4 z-50 inline-flex h-10 w-10 items-center justify-center rounded-lg bg-white text-neutral-700 shadow-sm ring-1 ring-neutral-200 lg:hidden"
+            aria-label="Close navigation"
+            @click="showingMobileSidebar = false"
+        >
+            <X class="h-5 w-5" />
+        </button>
     </div>
 </template>
+
+<style scoped>
+.fade-enter-active,
+.fade-leave-active,
+.slide-enter-active,
+.slide-leave-active {
+    transition: all 0.18s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+}
+
+.slide-enter-from,
+.slide-leave-to {
+    transform: translateX(-100%);
+}
+</style>

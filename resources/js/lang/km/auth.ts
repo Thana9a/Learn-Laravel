@@ -1,0 +1,31 @@
+const auth = {
+  title: 'ផ្ទៀងផ្ទាត់គណនី',
+  login: 'ចូលគណនី',
+  login_title: 'ចូលទៅកាន់គណនីរបស់អ្នក',
+  register: 'ចុះឈ្មោះ',
+  register_title: 'បង្កើតគណនីថ្មី',
+  logout: 'ចាកចេញ',
+  email: 'អ៊ីមែល',
+  password: 'ពាក្យសម្ងាត់',
+  password_confirmation: 'បញ្ជាក់ពាក្យសម្ងាត់',
+  remember_me: 'ចងចាំខ្ញុំ',
+  forgot_password: 'ភ្លេចពាក្យសម្ងាត់?',
+  reset_password: 'កំណត់ពាក្យសម្ងាត់ឡើងវិញ',
+  send_reset_link: 'ផ្ញើតំណភ្ជាប់កំណត់ពាក្យសម្ងាត់',
+  already_registered: 'មានគណនីរួចហើយ?',
+  dont_have_account: 'មិនទាន់មានគណនី?',
+  name: 'ឈ្មោះពេញ',
+  profile: 'ការកំណត់គណនី',
+  profile_information: 'ព័ត៌មានគណនី',
+  update_password: 'ផ្លាស់ប្តូរពាក្យសម្ងាត់',
+  current_password: 'ពាក្យសម្ងាត់បច្ចុប្បន្ន',
+  new_password: 'ពាក្យសម្ងាត់ថ្មី',
+  messages: {
+    logged_in: 'បានចូលគណនីដោយជោគជ័យ។',
+    logged_out: 'បានចាកចេញដោយជោគជ័យ។',
+    password_updated: 'ពាក្យសម្ងាត់ត្រូវបានផ្លាស់ប្តូរដោយជោគជ័យ។',
+    profile_updated: 'ព័ត៌មានគណនីត្រូវបានកែប្រែដោយជោគជ័យ។',
+  },
+} as const;
+
+export default auth;

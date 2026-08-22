@@ -41,6 +41,22 @@ class Order extends Model
     }
 
     /**
+     * Get the discounts applied to this order.
+     */
+    public function orderDiscounts(): HasMany
+    {
+        return $this->hasMany(OrderDiscount::class);
+    }
+
+    /**
+     * Get payments for this order.
+     */
+    public function payments(): HasMany
+    {
+        return $this->hasMany(Payment::class);
+    }
+
+    /**
      * Recalculate and persist the total amount based on current order items.
      */
     public function recomputeTotal(): self
