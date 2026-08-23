@@ -22,12 +22,14 @@ export const menu: MenuGroup[] = [
         labelKey: 'menu.items.pos',
         route: 'pos.index',
         icon: 'Coffee',
+        permission: 'order.create',
       },
       {
         name: 'Orders',
         labelKey: 'menu.items.orders',
         route: 'orders.index',
         icon: 'Receipt',
+        permission: 'order.view',
       },
     ],
   },
@@ -40,6 +42,7 @@ export const menu: MenuGroup[] = [
         labelKey: 'menu.items.products',
         route: 'products.index',
         icon: 'ShoppingBag',
+        permission: 'product.view',
       },
       // Planned pages (routes not yet registered in routes/web.php):
       // {
@@ -47,6 +50,7 @@ export const menu: MenuGroup[] = [
       //   labelKey: 'menu.items.discounts',
       //   route: 'discounts.index',
       //   icon: 'Percent',
+      //   permission: 'discount.manage',
       // },
       // {
       //   name: 'Payments',
@@ -65,6 +69,7 @@ export const menu: MenuGroup[] = [
         labelKey: 'menu.items.reports',
         route: 'reports.index',
         icon: 'BarChart3',
+        permission: 'report.view',
       },
     ],
   },
@@ -77,12 +82,14 @@ export const menu: MenuGroup[] = [
         labelKey: 'menu.items.dashboard',
         route: 'dashboard',
         icon: 'LayoutDashboard',
+        permission: 'dashboard.view',
       },
       {
         name: 'Profile',
         labelKey: 'menu.items.profile',
         route: 'profile.edit',
         icon: 'User',
+        // No permission required - all authenticated users can edit their profile
       },
       // Planned pages (routes not yet registered in routes/web.php):
       // {
@@ -90,12 +97,14 @@ export const menu: MenuGroup[] = [
       //   labelKey: 'menu.items.users',
       //   route: 'users.index',
       //   icon: 'Users',
+      //   permission: 'user.manage',
       // },
       // {
       //   name: 'Settings',
       //   labelKey: 'menu.items.settings',
       //   route: 'settings.edit',
       //   icon: 'Settings',
+      //   permission: 'settings.manage',
       // },
     ],
   },

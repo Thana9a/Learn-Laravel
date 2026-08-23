@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { Head, router, usePage } from '@inertiajs/vue3';
-import type { ProductData, StaffUser, OrderData } from '@/types/pos';
-import { useOrderCart } from '@/composables/useOrderCart';
+import type { ProductData, StaffUser, OrderData } from '@/Types/pos.type';
+import { useOrderCart } from '@/Composables/useOrderCart';
 import MenuGrid from '@/Components/Pos/MenuGrid.vue';
 import OrderCart from '@/Components/Pos/OrderCart.vue';
 

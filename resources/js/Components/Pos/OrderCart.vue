@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import type { CartItem, StaffUser } from '@/types/pos';
+import type { CartItem, StaffUser } from '@/Types/pos.type';
 import OrderCartItem from '@/Components/Pos/OrderCartItem.vue';
 
 const props = defineProps<{

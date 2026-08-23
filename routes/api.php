@@ -32,6 +32,16 @@ Route::middleware('auth:sanctum')->group(function () {
     // Live Product search/autocomplete
     Route::get('/products/search', [ProductApiController::class, 'search'])->name('api.products.search');
 
-    // Real-time promo code validation
-    Route::post('/discounts/validate', [DiscountApiController::class, 'validateCode'])->name('api.discounts.validate');
+    // Real-time promo code validation - requires discount.apply permission
+    Route::post('/discounts/validate', [DiscountApiController::class, 'validateCode'])
+        ->middleware('permission:discount.apply')
+        ->name('api.discounts.validate');
+
+    // Discount management endpoints (for future implementation)
+    // Route::middleware('permission:discount.manage')->group(function () {
+    //     Route::get('/discounts', [DiscountApiController::class, 'index'])->name('api.discounts.index');
+    //     Route::post('/discounts', [DiscountApiController::class, 'store'])->name('api.discounts.store');
+    //     Route::put('/discounts/{discount}', [DiscountApiController::class, 'update'])->name('api.discounts.update');
+    //     Route::delete('/discounts/{discount}', [DiscountApiController::class, 'destroy'])->name('api.discounts.destroy');
+    // });
 });

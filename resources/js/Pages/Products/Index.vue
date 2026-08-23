@@ -2,6 +2,7 @@
 import { computed, ref } from 'vue';
 import { Head, router, useForm } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
+import BaseCard from '@/Components/BaseCard.vue';
 import en from '@/lang/en';
 import {
   AlertTriangle,
@@ -119,13 +120,13 @@ function deleteProduct(product: Product) {
     <div class="space-y-6 p-4 sm:p-6 lg:p-8">
       <div class="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
         <div>
-          <p class="text-xs font-medium uppercase tracking-wider text-neutral-500">{{ t.dashboard.eyebrow }}</p>
-          <h1 class="mt-1 text-2xl font-semibold text-neutral-900">{{ t.title }}</h1>
-          <p class="mt-1 text-sm text-neutral-500">{{ t.dashboard.subtitle }}</p>
+          <p class="text-xs font-medium uppercase tracking-wider text-neutral-500 dark:text-neutral-400">{{ t.dashboard.eyebrow }}</p>
+          <h1 class="mt-1 text-2xl font-semibold text-neutral-900 dark:text-neutral-100">{{ t.title }}</h1>
+          <p class="mt-1 text-sm text-neutral-500 dark:text-neutral-400">{{ t.dashboard.subtitle }}</p>
         </div>
         <a
           :href="route('pos.index')"
-          class="inline-flex items-center justify-center gap-2 rounded-lg bg-neutral-100 px-4 py-2 text-sm font-medium text-neutral-700 transition-colors hover:bg-neutral-200"
+          class="inline-flex items-center justify-center gap-2 rounded-lg bg-neutral-100 px-4 py-2 text-sm font-medium text-neutral-700 transition-colors hover:bg-neutral-200 dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-600"
         >
           <Package class="h-4 w-4" />
           {{ t.dashboard.open_pos }}
@@ -133,55 +134,55 @@ function deleteProduct(product: Product) {
       </div>
 
       <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <div class="rounded-xl border border-neutral-200 bg-white p-4 shadow-sm">
+        <BaseCard>
           <div class="flex items-center justify-between">
-            <p class="text-sm font-medium text-neutral-500">{{ t.dashboard.stats.total_products }}</p>
+            <p class="text-sm font-medium text-neutral-500 dark:text-neutral-400">{{ t.dashboard.stats.total_products }}</p>
             <Package class="h-5 w-5 text-primary-500" />
           </div>
-          <p class="mt-2 text-2xl font-semibold text-neutral-900">{{ stats.total_products }}</p>
-          <p class="mt-1 text-xs text-neutral-500">{{ inStockCount }} {{ t.dashboard.stats.in_stock }}</p>
-        </div>
+          <p class="mt-2 text-2xl font-semibold text-neutral-900 dark:text-neutral-100">{{ stats.total_products }}</p>
+          <p class="mt-1 text-xs text-neutral-500 dark:text-neutral-400">{{ inStockCount }} {{ t.dashboard.stats.in_stock }}</p>
+        </BaseCard>
 
-        <div class="rounded-xl border border-neutral-200 bg-white p-4 shadow-sm">
+        <BaseCard>
           <div class="flex items-center justify-between">
-            <p class="text-sm font-medium text-neutral-500">{{ t.dashboard.stats.inventory_units }}</p>
+            <p class="text-sm font-medium text-neutral-500 dark:text-neutral-400">{{ t.dashboard.stats.inventory_units }}</p>
             <Boxes class="h-5 w-5 text-info-600" />
           </div>
-          <p class="mt-2 text-2xl font-semibold text-neutral-900">{{ stats.total_inventory }}</p>
-          <p class="mt-1 text-xs text-neutral-500">{{ t.dashboard.stats.inventory_hint }}</p>
-        </div>
+          <p class="mt-2 text-2xl font-semibold text-neutral-900 dark:text-neutral-100">{{ stats.total_inventory }}</p>
+          <p class="mt-1 text-xs text-neutral-500 dark:text-neutral-400">{{ t.dashboard.stats.inventory_hint }}</p>
+        </BaseCard>
 
-        <div class="rounded-xl border border-neutral-200 bg-white p-4 shadow-sm">
+        <BaseCard>
           <div class="flex items-center justify-between">
-            <p class="text-sm font-medium text-neutral-500">{{ t.dashboard.stats.low_stock }}</p>
+            <p class="text-sm font-medium text-neutral-500 dark:text-neutral-400">{{ t.dashboard.stats.low_stock }}</p>
             <AlertTriangle class="h-5 w-5 text-warning-600" />
           </div>
-          <p class="mt-2 text-2xl font-semibold text-neutral-900">{{ stats.low_stock_count }}</p>
-          <p class="mt-1 text-xs text-neutral-500">{{ t.dashboard.stats.low_stock_hint }}</p>
-        </div>
+          <p class="mt-2 text-2xl font-semibold text-neutral-900 dark:text-neutral-100">{{ stats.low_stock_count }}</p>
+          <p class="mt-1 text-xs text-neutral-500 dark:text-neutral-400">{{ t.dashboard.stats.low_stock_hint }}</p>
+        </BaseCard>
 
-        <div class="rounded-xl border border-neutral-200 bg-white p-4 shadow-sm">
+        <BaseCard>
           <div class="flex items-center justify-between">
-            <p class="text-sm font-medium text-neutral-500">{{ t.dashboard.stats.average_price }}</p>
+            <p class="text-sm font-medium text-neutral-500 dark:text-neutral-400">{{ t.dashboard.stats.average_price }}</p>
             <Wallet class="h-5 w-5 text-success-600" />
           </div>
-          <p class="mt-2 text-2xl font-semibold text-neutral-900">{{ money(stats.avg_price) }}</p>
-          <p class="mt-1 text-xs text-neutral-500">{{ t.dashboard.stats.average_price_hint }}</p>
-        </div>
+          <p class="mt-2 text-2xl font-semibold text-neutral-900 dark:text-neutral-100">{{ money(stats.avg_price) }}</p>
+          <p class="mt-1 text-xs text-neutral-500 dark:text-neutral-400">{{ t.dashboard.stats.average_price_hint }}</p>
+        </BaseCard>
       </div>
 
       <div class="grid gap-6 xl:grid-cols-3">
         <section class="space-y-4 xl:col-span-2">
-          <div class="rounded-xl border border-neutral-200 bg-white p-4 shadow-sm">
+          <BaseCard>
             <div class="flex flex-col gap-4 lg:flex-row lg:items-end">
               <label class="flex-1">
-                <span class="mb-1 block text-xs font-medium text-neutral-700">{{ t.dashboard.filters.search_label }}</span>
+                <span class="mb-1 block text-xs font-medium text-neutral-700 dark:text-neutral-300">{{ t.dashboard.filters.search_label }}</span>
                 <span class="relative block">
-                  <Search class="pointer-events-none absolute left-3 top-3.5 h-4 w-4 text-neutral-500" />
+                  <Search class="pointer-events-none absolute left-3 top-3.5 h-4 w-4 text-neutral-500 dark:text-neutral-400" />
                   <input
                     v-model="search"
                     type="search"
-                    class="h-12 w-full rounded-lg border border-neutral-200 bg-white pl-10 pr-4 text-sm text-neutral-900 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    class="h-12 w-full rounded-lg border border-neutral-200 bg-white pl-10 pr-4 text-sm text-neutral-900 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-100"
                     :placeholder="t.placeholders.search"
                     @keyup.enter="applyFilters"
                   />
@@ -189,10 +190,10 @@ function deleteProduct(product: Product) {
               </label>
 
               <label class="w-full lg:w-56">
-                <span class="mb-1 block text-xs font-medium text-neutral-700">{{ t.dashboard.filters.category_label }}</span>
+                <span class="mb-1 block text-xs font-medium text-neutral-700 dark:text-neutral-300">{{ t.dashboard.filters.category_label }}</span>
                 <select
                   v-model="selectedCategory"
-                  class="h-12 w-full rounded-lg border border-neutral-200 bg-white px-4 text-sm text-neutral-900 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  class="h-12 w-full rounded-lg border border-neutral-200 bg-white px-4 text-sm text-neutral-900 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-100"
                 >
                   <option v-for="category in categoryOptions" :key="category" :value="category">{{ category }}</option>
                 </select>
@@ -209,26 +210,26 @@ function deleteProduct(product: Product) {
                 </button>
                 <button
                   type="button"
-                  class="inline-flex h-12 items-center rounded-lg bg-neutral-100 px-4 text-sm font-medium text-neutral-700 transition-colors hover:bg-neutral-200"
+                  class="inline-flex h-12 items-center rounded-lg bg-neutral-100 px-4 text-sm font-medium text-neutral-700 transition-colors hover:bg-neutral-200 dark:bg-neutral-700 dark:text-neutral-300 dark:hover:bg-neutral-600"
                   @click="clearFilters"
                 >
                   {{ common.actions.clear }}
                 </button>
               </div>
             </div>
-          </div>
+          </BaseCard>
 
-          <div class="overflow-hidden rounded-xl border border-neutral-200 bg-white shadow-sm">
-            <div class="flex items-center justify-between border-b border-neutral-200 px-4 py-3">
+          <BaseCard :flush="true">
+            <div class="flex items-center justify-between border-b border-neutral-200 px-4 py-3 dark:border-neutral-700">
               <div>
-                <h2 class="text-lg font-medium text-neutral-900">{{ t.dashboard.table.title }}</h2>
-                <p class="text-xs text-neutral-500">{{ products.length }} {{ t.dashboard.filters.match_count }}</p>
+                <h2 class="text-lg font-medium text-neutral-900 dark:text-neutral-100">{{ t.dashboard.table.title }}</h2>
+                <p class="text-xs text-neutral-500 dark:text-neutral-400">{{ products.length }} {{ t.dashboard.filters.match_count }}</p>
               </div>
             </div>
 
             <div class="overflow-x-auto">
               <table class="w-full text-left text-sm">
-                <thead class="sticky top-0 border-b border-neutral-200 bg-white text-xs text-neutral-500">
+                <thead class="sticky top-0 border-b border-neutral-200 bg-white text-xs text-neutral-500 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-400">
                   <tr>
                     <th class="px-4 py-3 font-medium">{{ t.dashboard.table.product }}</th>
                     <th class="px-4 py-3 font-medium">{{ t.fields.category }}</th>
@@ -238,19 +239,19 @@ function deleteProduct(product: Product) {
                     <th class="px-4 py-3 text-right font-medium">{{ t.dashboard.table.actions }}</th>
                   </tr>
                 </thead>
-                <tbody class="divide-y divide-neutral-100 text-neutral-700">
+                <tbody class="divide-y divide-neutral-100 text-neutral-700 dark:divide-neutral-700 dark:text-neutral-300">
                   <tr v-if="products.length === 0">
-                    <td colspan="6" class="px-4 py-10 text-center text-neutral-500">
+                    <td colspan="6" class="px-4 py-10 text-center text-neutral-500 dark:text-neutral-400">
                       {{ t.dashboard.table.empty }}
                     </td>
                   </tr>
-                  <tr v-for="product in products" :key="product.id" class="h-12 hover:bg-neutral-50">
+                  <tr v-for="product in products" :key="product.id" class="h-12 hover:bg-neutral-50 dark:hover:bg-neutral-800">
                     <td class="px-4 py-3">
-                      <div class="font-medium text-neutral-900">{{ product.name }}</div>
-                      <div class="max-w-sm truncate text-xs text-neutral-500">{{ product.description || t.dashboard.table.no_description }}</div>
+                      <div class="font-medium text-neutral-900 dark:text-neutral-100">{{ product.name }}</div>
+                      <div class="max-w-sm truncate text-xs text-neutral-500 dark:text-neutral-400">{{ product.description || t.dashboard.table.no_description }}</div>
                     </td>
                     <td class="px-4 py-3">{{ product.category }}</td>
-                    <td class="px-4 py-3 text-right font-mono font-medium text-neutral-900">{{ money(product.price) }}</td>
+                    <td class="px-4 py-3 text-right font-mono font-medium text-neutral-900 dark:text-neutral-100">{{ money(product.price) }}</td>
                     <td class="px-4 py-3 text-right font-mono">{{ product.stock }}</td>
                     <td class="px-4 py-3 text-center">
                       <span
@@ -267,7 +268,7 @@ function deleteProduct(product: Product) {
                     <td class="px-4 py-3 text-right">
                       <button
                         type="button"
-                        class="inline-flex h-9 w-9 items-center justify-center rounded-lg text-neutral-500 transition-colors hover:bg-danger-50 hover:text-danger-600"
+                        class="inline-flex h-9 w-9 items-center justify-center rounded-lg text-neutral-500 transition-colors hover:bg-danger-50 hover:text-danger-600 dark:text-neutral-400 dark:hover:bg-danger-900/20"
                         :aria-label="`${t.delete_product} ${product.name}`"
                         @click="deleteProduct(product)"
                       >
@@ -278,32 +279,32 @@ function deleteProduct(product: Product) {
                 </tbody>
               </table>
             </div>
-          </div>
+          </BaseCard>
         </section>
 
         <aside class="space-y-6">
-          <section class="rounded-xl border border-neutral-200 bg-white p-4 shadow-sm">
+          <BaseCard>
             <div class="mb-4 flex items-center gap-2">
               <Plus class="h-5 w-5 text-primary-500" />
-              <h2 class="text-lg font-medium text-neutral-900">{{ t.dashboard.form.title }}</h2>
+              <h2 class="text-lg font-medium text-neutral-900 dark:text-neutral-100">{{ t.dashboard.form.title }}</h2>
             </div>
 
             <form class="space-y-4" @submit.prevent="submitProduct">
               <label class="block">
-                <span class="mb-1 block text-xs font-medium text-neutral-700">{{ t.dashboard.form.name }}</span>
+                <span class="mb-1 block text-xs font-medium text-neutral-700 dark:text-neutral-300">{{ t.dashboard.form.name }}</span>
                 <input
                   v-model="form.name"
                   type="text"
-                  class="h-12 w-full rounded-lg border border-neutral-200 bg-white px-4 text-sm text-neutral-900 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  class="h-12 w-full rounded-lg border border-neutral-200 bg-white px-4 text-sm text-neutral-900 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-100"
                 />
                 <span v-if="form.errors.name" class="mt-1 block text-xs text-danger-600">{{ form.errors.name }}</span>
               </label>
 
               <label class="block">
-                <span class="mb-1 block text-xs font-medium text-neutral-700">{{ t.fields.category }}</span>
+                <span class="mb-1 block text-xs font-medium text-neutral-700 dark:text-neutral-300">{{ t.fields.category }}</span>
                 <select
                   v-model="form.category"
-                  class="h-12 w-full rounded-lg border border-neutral-200 bg-white px-4 text-sm text-neutral-900 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  class="h-12 w-full rounded-lg border border-neutral-200 bg-white px-4 text-sm text-neutral-900 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-100"
                 >
                   <option v-for="category in categories" :key="category" :value="category">{{ category }}</option>
                 </select>
@@ -312,39 +313,39 @@ function deleteProduct(product: Product) {
 
               <div class="grid grid-cols-2 gap-3">
                 <label class="block">
-                  <span class="mb-1 block text-xs font-medium text-neutral-700">{{ t.fields.price }}</span>
+                  <span class="mb-1 block text-xs font-medium text-neutral-700 dark:text-neutral-300">{{ t.fields.price }}</span>
                   <input
                     v-model="form.price"
                     type="number"
                     min="0.01"
                     step="0.01"
-                    class="h-12 w-full rounded-lg border border-neutral-200 bg-white px-4 text-sm text-neutral-900 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    class="h-12 w-full rounded-lg border border-neutral-200 bg-white px-4 text-sm text-neutral-900 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-100"
                   />
                   <span v-if="form.errors.price" class="mt-1 block text-xs text-danger-600">{{ form.errors.price }}</span>
                 </label>
 
                 <label class="block">
-                  <span class="mb-1 block text-xs font-medium text-neutral-700">{{ t.fields.stock }}</span>
+                  <span class="mb-1 block text-xs font-medium text-neutral-700 dark:text-neutral-300">{{ t.fields.stock }}</span>
                   <input
                     v-model="form.stock"
                     type="number"
                     min="0"
-                    class="h-12 w-full rounded-lg border border-neutral-200 bg-white px-4 text-sm text-neutral-900 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    class="h-12 w-full rounded-lg border border-neutral-200 bg-white px-4 text-sm text-neutral-900 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-100"
                   />
                   <span v-if="form.errors.stock" class="mt-1 block text-xs text-danger-600">{{ form.errors.stock }}</span>
                 </label>
               </div>
 
               <label class="block">
-                <span class="mb-1 block text-xs font-medium text-neutral-700">{{ t.fields.description }}</span>
+                <span class="mb-1 block text-xs font-medium text-neutral-700 dark:text-neutral-300">{{ t.fields.description }}</span>
                 <textarea
                   v-model="form.description"
                   rows="3"
-                  class="w-full rounded-lg border border-neutral-200 bg-white px-4 py-3 text-sm text-neutral-900 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500"
+                  class="w-full rounded-lg border border-neutral-200 bg-white px-4 py-3 text-sm text-neutral-900 focus:border-primary-500 focus:outline-none focus:ring-2 focus:ring-primary-500 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-100"
                 />
               </label>
 
-              <label class="flex min-h-12 cursor-pointer items-center gap-3 rounded-lg border border-neutral-200 bg-neutral-50 px-4 text-sm font-medium text-neutral-700">
+              <label class="flex min-h-12 cursor-pointer items-center gap-3 rounded-lg border border-neutral-200 bg-neutral-50 px-4 text-sm font-medium text-neutral-700 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-300">
                 <input v-model="form.is_featured" type="checkbox" class="rounded border-neutral-300 text-primary-500 focus:ring-primary-500" />
                 <Star class="h-4 w-4 text-primary-500" />
                 {{ t.dashboard.form.feature }}
@@ -359,29 +360,29 @@ function deleteProduct(product: Product) {
                 {{ form.processing ? t.dashboard.form.saving : t.dashboard.form.save }}
               </button>
             </form>
-          </section>
+          </BaseCard>
 
-          <section class="rounded-xl border border-neutral-200 bg-white p-4 shadow-sm">
+          <BaseCard>
             <div class="mb-4 flex items-center gap-2">
               <AlertTriangle class="h-5 w-5 text-warning-600" />
-              <h2 class="text-lg font-medium text-neutral-900">{{ t.dashboard.restock.title }}</h2>
+              <h2 class="text-lg font-medium text-neutral-900 dark:text-neutral-100">{{ t.dashboard.restock.title }}</h2>
             </div>
 
-            <div v-if="lowStockProducts.length === 0" class="rounded-lg bg-success-50 p-4 text-sm text-success-600">
+            <div v-if="lowStockProducts.length === 0" class="rounded-lg bg-success-50 p-4 text-sm text-success-600 dark:bg-success-900/20 dark:text-success-400">
               {{ t.dashboard.restock.empty }}
             </div>
             <div v-else class="space-y-3">
               <div v-for="product in lowStockProducts" :key="product.id" class="flex items-center justify-between gap-3">
                 <div class="min-w-0">
-                  <p class="truncate text-sm font-medium text-neutral-900">{{ product.name }}</p>
-                  <p class="text-xs text-neutral-500">{{ product.category }}</p>
+                  <p class="truncate text-sm font-medium text-neutral-900 dark:text-neutral-100">{{ product.name }}</p>
+                  <p class="text-xs text-neutral-500 dark:text-neutral-400">{{ product.category }}</p>
                 </div>
-                <span class="rounded-full bg-warning-50 px-2.5 py-0.5 text-xs font-medium text-warning-600">
+                <span class="rounded-full bg-warning-50 px-2.5 py-0.5 text-xs font-medium text-warning-600 dark:bg-warning-900/20">
                   {{ product.stock }} {{ t.dashboard.restock.left }}
                 </span>
               </div>
             </div>
-          </section>
+          </BaseCard>
         </aside>
       </div>
     </div>

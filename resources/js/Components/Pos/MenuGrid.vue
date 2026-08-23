@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import type { ProductData } from '@/types/pos';
+import type { ProductData } from '@/Types/pos.type';
 import CategoryTabs from '@/Components/Pos/CategoryTabs.vue';
 import ProductCard from '@/Components/Pos/ProductCard.vue';
 

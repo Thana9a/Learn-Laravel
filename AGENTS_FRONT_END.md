@@ -37,13 +37,13 @@ style — study existing code first, then match it.
 
 ## STEP 4 — FILE ORGANIZATION (composables / constants / schemas / types)
 - Composables:  resources/js/Composables/useXxx.ts
-                 Always prefix "use" (e.g. useBlacklistIp.ts, usePagination.ts)
+                 Always prefix "use" (e.g. useDarkMode.ts, usePagination.ts)
 - Constants:    resources/js/Constants/<feature>.constant.ts
-                 (e.g. blacklistIp.constant.ts)
+                 (e.g. darkMode.constant.ts)
 - Schemas:      resources/js/Schemas/<feature>.schema.ts
-                 Zod / vee-validate schemas (e.g. blacklistIp.schema.ts)
+                 Zod / vee-validate schemas (e.g. darkMode.schema.ts)
 - Types:        resources/js/Types/<feature>.type.ts
-                 Interfaces/types (e.g. blacklistIp.type.ts)
+                 Interfaces/types (e.g. darkMode.type.ts)
 - If a composable/constant/schema/type is used ONLY inside one page, it's OK
   to keep it local inside that page's folder — but the moment it's needed in
   a 2nd page, move it to the shared folder above immediately.

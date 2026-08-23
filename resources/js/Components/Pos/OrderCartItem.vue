@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
-import type { CartItem } from '@/types/pos';
+import type { CartItem } from '@/Types/pos.type';
 import QuantitySelector from '@/Components/Pos/QuantitySelector.vue';
 
 const props = defineProps<{

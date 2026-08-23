@@ -1,5 +1,5 @@
 import { ref, computed } from 'vue';
-import type { CartItem, ProductData } from '@/types/pos';
+import type { CartItem, ProductData } from '@/Types/pos.type';
 
 const items = ref<CartItem[]>([]);
 const customerName = ref<string>('');
