@@ -79,14 +79,14 @@ function itemLabel(item: MenuItem): string {
 </script>
 
 <template>
-  <aside class="w-64 bg-white border-r border-neutral-200 flex flex-col h-screen select-none dark:bg-neutral-900 dark:border-neutral-700">
-    <div class="h-16 flex items-center px-6 border-b border-neutral-200 gap-3 dark:border-neutral-700">
+  <aside class="w-64 bg-white border-r border-border flex flex-col h-screen select-none dark:bg-neutral-900">
+    <div class="h-16 flex items-center px-6 border-b border-border gap-3">
       <div class="w-9 h-9 rounded-lg bg-primary-500 flex items-center justify-center text-white shadow-sm font-bold text-lg">
         <Coffee class="h-5 w-5" />
       </div>
       <div>
-        <h1 class="font-semibold text-neutral-900 leading-tight dark:text-neutral-100">Coffee POS</h1>
-        <p class="text-xs text-neutral-500 dark:text-neutral-400">Staff Dashboard</p>
+        <h1 class="font-semibold text-foreground leading-tight">Coffee POS</h1>
+        <p class="text-xs text-muted">Staff Dashboard</p>
       </div>
     </div>
 
@@ -120,14 +120,14 @@ function itemLabel(item: MenuItem): string {
       </div>
     </nav>
 
-    <div v-if="authUser" class="p-4 border-t border-neutral-200 bg-neutral-50/50 dark:border-neutral-700 dark:bg-neutral-800/50">
+    <div v-if="authUser" class="p-4 border-t border-border bg-neutral-50/50 dark:bg-neutral-800/50">
       <div class="flex items-center gap-3">
         <div class="w-9 h-9 rounded-full bg-neutral-200 text-neutral-700 flex items-center justify-center font-semibold text-sm dark:bg-neutral-700 dark:text-neutral-200">
           {{ authUser.name ? authUser.name.charAt(0).toUpperCase() : 'U' }}
         </div>
         <div class="flex-1 min-w-0">
-          <p class="text-sm font-medium text-neutral-900 truncate dark:text-neutral-100">{{ authUser.name }}</p>
-          <p class="text-xs text-neutral-500 truncate dark:text-neutral-400">{{ authUser.email }}</p>
+          <p class="text-sm font-medium text-foreground truncate">{{ authUser.name }}</p>
+          <p class="text-xs text-muted truncate">{{ authUser.email }}</p>
         </div>
       </div>
     </div>

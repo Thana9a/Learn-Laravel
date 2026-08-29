@@ -2,6 +2,7 @@
 import { computed } from 'vue';
 import type { CartItem, StaffUser } from '@/Types/pos.type';
 import OrderCartItem from '@/Components/Pos/OrderCartItem.vue';
+import BaseText from '@/Components/BaseText.vue';
 
 const props = defineProps<{
     items: CartItem[];
@@ -32,9 +33,9 @@ const isCartEmpty = computed(() => props.items.length === 0);
 </script>
 
 <template>
-    <div class="flex flex-col h-full bg-white rounded-xl border border-neutral-200 overflow-hidden shadow-sm">
+    <div class="flex flex-col h-full bg-surface rounded-xl border border-border overflow-hidden shadow-sm">
         <!-- Ticket Header -->
-        <div class="p-4 bg-white border-b border-neutral-200 flex items-center justify-between">
+        <div class="p-4 bg-surface border-b border-border flex items-center justify-between">
             <div class="flex items-center gap-2">
                 <div class="w-8 h-8 rounded-lg bg-primary-100 flex items-center justify-center text-primary-600">
                     <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -42,8 +43,8 @@ const isCartEmpty = computed(() => props.items.length === 0);
                     </svg>
                 </div>
                 <div>
-                    <h3 class="font-display font-bold text-base text-neutral-900">Current Order</h3>
-                    <p class="font-mono text-[11px] text-neutral-500">
+                    <h3 class="font-display font-bold text-base text-foreground">Current Order</h3>
+                    <p class="font-mono text-[11px] text-muted">
                         {{ items.length }} item{{ items.length === 1 ? '' : 's' }} ({{ totalUnits }} units)
                     </p>
                 </div>
@@ -54,24 +55,24 @@ const isCartEmpty = computed(() => props.items.length === 0);
                 type="button"
                 @click="emit('clear-cart')"
                 :disabled="isSubmitting"
-                class="text-xs text-neutral-500 hover:text-danger-600 transition-colors font-medium focus-visible:outline-none"
+                class="text-xs text-muted hover:text-danger-600 transition-colors font-medium focus-visible:outline-none"
             >
                 Clear Ticket
             </button>
         </div>
 
         <!-- Optional Order Metadata (Staff, Customer Name, Notes) -->
-        <div class="p-3.5 bg-neutral-50 border-b border-neutral-200 space-y-2.5">
+        <div class="p-3.5 bg-surface-muted border-b border-border space-y-2.5">
             <!-- Staff selection dropdown -->
             <div class="flex items-center justify-between gap-2">
-                <label for="pos-staff-select" class="text-xs font-semibold text-neutral-500 whitespace-nowrap">
+                <label for="pos-staff-select" class="text-xs font-semibold text-muted whitespace-nowrap">
                     Barista:
                 </label>
                 <select
                     id="pos-staff-select"
                     :value="staffId"
                     @change="emit('update:staffId', ($event.target as HTMLSelectElement).value ? Number(($event.target as HTMLSelectElement).value) : null)"
-                    class="bg-white text-neutral-900 text-xs rounded-lg border border-neutral-200 py-1.5 px-2.5 focus:ring-2 focus:ring-primary-500 flex-1 max-w-[200px]"
+                    class="bg-surface text-foreground text-xs rounded-lg border border-border py-1.5 px-2.5 focus:ring-2 focus:ring-primary-500 flex-1 max-w-[200px]"
                 >
                     <option :value="null">Default Barista</option>
                     <option
@@ -91,7 +92,7 @@ const isCartEmpty = computed(() => props.items.length === 0);
                     @input="emit('update:customerName', ($event.target as HTMLInputElement).value)"
                     type="text"
                     placeholder="Customer Name (optional)"
-                    class="w-full bg-white text-neutral-900 text-xs rounded-lg border border-neutral-200 py-1.5 px-2.5 placeholder-neutral-400 focus:ring-2 focus:ring-primary-500"
+                    class="w-full bg-surface text-foreground text-xs rounded-lg border border-border py-1.5 px-2.5 placeholder-neutral-400 focus:ring-2 focus:ring-primary-500"
                 />
             </div>
 
@@ -102,7 +103,7 @@ const isCartEmpty = computed(() => props.items.length === 0);
                     @input="emit('update:notes', ($event.target as HTMLInputElement).value)"
                     type="text"
                     placeholder="Order notes e.g. Extra hot, oat milk..."
-                    class="w-full bg-white text-neutral-900 text-xs rounded-lg border border-neutral-200 py-1.5 px-2.5 placeholder-neutral-400 focus:ring-2 focus:ring-primary-500"
+                    class="w-full bg-surface text-foreground text-xs rounded-lg border border-border py-1.5 px-2.5 placeholder-neutral-400 focus:ring-2 focus:ring-primary-500"
                 />
             </div>
         </div>
@@ -135,34 +136,34 @@ const isCartEmpty = computed(() => props.items.length === 0);
             <!-- Empty Ticket Placeholder -->
             <div
                 v-else
-                class="h-full min-h-[220px] flex flex-col items-center justify-center text-center p-6 text-neutral-500"
+                class="h-full min-h-[220px] flex flex-col items-center justify-center text-center p-6 text-muted"
             >
-                <div class="w-12 h-12 rounded-xl bg-neutral-100 flex items-center justify-center text-neutral-400 mb-3">
+                <div class="w-12 h-12 rounded-xl bg-neutral-100 dark:bg-neutral-700 flex items-center justify-center text-neutral-400 dark:text-neutral-500 mb-3">
                     <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                     </svg>
                 </div>
-                <h4 class="font-display text-sm font-semibold text-neutral-900">Ticket is empty</h4>
-                <p class="text-xs text-neutral-500 mt-1 max-w-[180px]">
+                <h4 class="font-display text-sm font-semibold text-foreground">Ticket is empty</h4>
+                <BaseText size="xs" variant="muted" class="mt-1 max-w-[180px]">
                     Tap any item from the menu grid to begin building the order.
-                </p>
+                </BaseText>
             </div>
         </div>
 
         <!-- Ticket Footer Summary & Submit -->
-        <div class="p-4 bg-white border-t border-neutral-200 space-y-3">
+        <div class="p-4 bg-surface border-t border-border space-y-3">
             <!-- Receipt Dashed Cut Line -->
-            <div class="border-t border-dashed border-neutral-200 pt-3">
-                <div class="flex items-center justify-between text-xs text-neutral-500">
+            <div class="border-t border-dashed border-border pt-3">
+                <div class="flex items-center justify-between text-xs text-muted">
                     <span>Subtotal</span>
                     <span class="font-mono">${{ total.toFixed(2) }}</span>
                 </div>
-                <div class="flex items-center justify-between text-xs text-neutral-500 mt-1">
+                <div class="flex items-center justify-between text-xs text-muted mt-1">
                     <span>Tax (included)</span>
                     <span class="font-mono">$0.00</span>
                 </div>
-                <div class="flex items-baseline justify-between mt-2 pt-2 border-t border-neutral-200">
-                    <span class="font-display font-bold text-sm text-neutral-900">Total Due</span>
+                <div class="flex items-baseline justify-between mt-2 pt-2 border-t border-border">
+                    <span class="font-display font-bold text-sm text-foreground">Total Due</span>
                     <span class="font-display font-bold text-xl text-primary-600">
                         ${{ total.toFixed(2) }}
                     </span>

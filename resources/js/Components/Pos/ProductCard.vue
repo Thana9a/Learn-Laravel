@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import type { ProductData } from '@/Types/pos.type';
+import BaseText from '@/Components/BaseText.vue';
 
 const props = defineProps<{
     product: ProductData;
@@ -36,14 +37,14 @@ function handleCardClick() {
 <template>
     <div
         @click="emit('add', product)"
-        class="group relative flex flex-col bg-white rounded-xl border border-neutral-200 overflow-hidden cursor-pointer select-none active:scale-95 active:bg-neutral-50 transition-transform shadow-sm"
+        class="group relative flex flex-col bg-surface rounded-xl border border-border overflow-hidden cursor-pointer select-none active:scale-95 active:bg-surface-muted transition-transform shadow-sm"
         :class="{ 'opacity-60 grayscale-[0.5] pointer-events-none': isOutOfStock }"
         tabindex="0"
         @keydown.enter.prevent="handleCardClick"
         @keydown.space.prevent="handleCardClick"
     >
         <!-- Product Image & Badges Container -->
-        <div class="relative w-full h-36 bg-neutral-100 overflow-hidden">
+        <div class="relative w-full h-36 bg-neutral-100 dark:bg-neutral-700 overflow-hidden">
             <img
                 v-if="product.image_url"
                 :src="product.image_url"
@@ -53,7 +54,7 @@ function handleCardClick() {
             />
             <div
                 v-if="!product.image_url"
-                class="absolute inset-0 bg-neutral-100 flex items-center justify-center text-neutral-300"
+                class="absolute inset-0 bg-neutral-100 dark:bg-neutral-700 flex items-center justify-center text-neutral-300 dark:text-neutral-600"
             >
                 <svg class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M18.364 5.636l-3.536 3.536m0 0a5 5 0 107.072 7.072 5 5 0 00-7.072-7.072zm0 0L12 12m-6 4a4 4 0 118 0 4 4 0 01-8 0z" />
@@ -73,7 +74,7 @@ function handleCardClick() {
                 <!-- Out of stock badge -->
                 <span
                     v-if="isOutOfStock"
-                    class="bg-white/80 border border-danger-500 text-danger-600 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-lg backdrop-blur-sm"
+                    class="bg-white/80 dark:bg-neutral-800/80 border border-danger-500 text-danger-600 text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-lg backdrop-blur-sm"
                 >
                     Sold Out
                 </span>
@@ -90,25 +91,27 @@ function handleCardClick() {
         <!-- Product Info Body -->
         <div class="flex-1 p-3.5 flex flex-col justify-between">
             <div>
-                <div class="text-xs text-neutral-500 uppercase tracking-wider font-semibold mb-0.5">
+                <div class="text-xs text-muted uppercase tracking-wider font-semibold mb-0.5">
                     {{ product.category }}
                 </div>
-                <h3 class="font-display font-semibold text-neutral-900 text-base leading-snug line-clamp-1">
+                <h3 class="font-display font-semibold text-foreground text-base leading-snug line-clamp-1">
                     {{ product.name }}
                 </h3>
-                <p
+                <BaseText
                     v-if="product.description"
-                    class="text-xs text-neutral-500 line-clamp-2 mt-1 leading-relaxed"
+                    size="xs"
+                    variant="muted"
+                    class="line-clamp-2 mt-1"
                 >
                     {{ product.description }}
-                </p>
+                </BaseText>
             </div>
 
-            <div class="mt-3 flex items-baseline justify-between pt-2 border-t border-neutral-100">
+            <div class="mt-3 flex items-baseline justify-between pt-2 border-t border-neutral-100 dark:border-neutral-800">
                 <div class="font-display font-bold text-primary-600 text-lg">
                     ${{ Number(product.price).toFixed(2) }}
                 </div>
-                <div class="font-mono text-xs text-neutral-500">
+                <div class="font-mono text-xs text-muted">
                     <span v-if="!isOutOfStock">{{ product.stock }} left</span>
                     <span v-else class="text-danger-600">0 stock</span>
                 </div>
@@ -116,7 +119,7 @@ function handleCardClick() {
         </div>
 
         <!-- Roast Gauge Bar (Section 0 Spec) -->
-        <div class="w-full h-1 bg-neutral-100 overflow-hidden">
+        <div class="w-full h-1 bg-neutral-100 dark:bg-neutral-700 overflow-hidden">
             <div
                 class="h-full transition-all duration-300"
                 :class="gaugeColorClass"

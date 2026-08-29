@@ -89,6 +89,24 @@ const order = {
     },
     confirm_delete: 'Delete order :order?',
   },
+  pos: {
+    terminal_title: 'Barista Order Terminal',
+    station: 'Station #1',
+    recent_orders: 'Recent Orders',
+    catalog: 'Catalog',
+    mobile_cart_label: 'Order Ticket (Mobile)',
+    toggle_cart_aria: 'Toggle Order Cart',
+    success: {
+      title: 'Order Placed & Sent to Bar!',
+      next_order: 'Start Next Order',
+      customer: 'Customer',
+      barista: 'Barista',
+      total_paid: 'Total Paid',
+    },
+    empty_ticket: 'Ticket is empty',
+    submit_order: 'Submit & Send to Bar',
+    walk_in_customer: 'Walk-in Customer',
+  },
 } as const;
 
 export default order;

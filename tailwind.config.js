@@ -50,6 +50,12 @@ export default {
                     500: '#3b82f6',
                     600: '#2563eb',
                 },
+                surface: 'rgb(var(--color-surface) / <alpha-value>)',
+                'surface-muted': 'rgb(var(--color-surface-muted) / <alpha-value>)',
+                foreground: 'rgb(var(--color-foreground) / <alpha-value>)',
+                body: 'rgb(var(--color-body) / <alpha-value>)',
+                muted: 'rgb(var(--color-muted) / <alpha-value>)',
+                border: 'rgb(var(--color-border) / <alpha-value>)',
             },
             fontFamily: {
                 sans: ['"Public Sans"', ...defaultTheme.fontFamily.sans],

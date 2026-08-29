@@ -29,12 +29,12 @@ function increment() {
 </script>
 
 <template>
-    <div class="inline-flex items-center bg-white rounded-lg p-0.5 border border-neutral-200 focus-within:ring-2 focus-within:ring-primary-500">
+    <div class="inline-flex items-center bg-surface rounded-lg p-0.5 border border-border focus-within:ring-2 focus-within:ring-primary-500">
         <button
             type="button"
             @click.stop="decrement"
             :disabled="disabled || modelValue <= min"
-            class="w-7 h-7 flex items-center justify-center rounded text-neutral-500 hover:bg-neutral-100 hover:text-neutral-900 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed disabled:active:scale-100 transition-colors focus-visible:outline-none"
+            class="w-7 h-7 flex items-center justify-center rounded text-muted hover:bg-neutral-100 hover:text-foreground dark:hover:bg-neutral-700 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed disabled:active:scale-100 transition-colors focus-visible:outline-none"
             aria-label="Decrease quantity"
         >
             <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
@@ -42,7 +42,7 @@ function increment() {
             </svg>
         </button>
 
-        <span class="w-8 text-center font-mono text-xs font-semibold text-neutral-900 select-none">
+        <span class="w-8 text-center font-mono text-xs font-semibold text-foreground select-none">
             {{ modelValue }}
         </span>
 
@@ -50,7 +50,7 @@ function increment() {
             type="button"
             @click.stop="increment"
             :disabled="disabled || modelValue >= max"
-            class="w-7 h-7 flex items-center justify-center rounded text-neutral-500 hover:bg-neutral-100 hover:text-neutral-900 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed disabled:active:scale-100 transition-colors focus-visible:outline-none"
+            class="w-7 h-7 flex items-center justify-center rounded text-muted hover:bg-neutral-100 hover:text-foreground dark:hover:bg-neutral-700 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed disabled:active:scale-100 transition-colors focus-visible:outline-none"
             aria-label="Increase quantity"
         >
             <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">

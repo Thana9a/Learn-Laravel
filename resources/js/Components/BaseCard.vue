@@ -43,7 +43,7 @@ const paddingClasses: Record<Padding, string> = {
 <template>
   <component
     :is="as"
-    class="rounded-xl border border-neutral-200 bg-white shadow-sm dark:border-neutral-700 dark:bg-neutral-800"
+    class="rounded-xl border border-border bg-surface shadow-sm"
     :class="[
       flush ? 'overflow-hidden' : paddingClasses[padding],
       elevated ? 'shadow-xl' : 'shadow-sm',

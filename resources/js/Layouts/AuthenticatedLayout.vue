@@ -26,7 +26,7 @@ const authUser = computed<AuthUser | null>(() => {
 </script>
 
 <template>
-    <div class="min-h-screen bg-neutral-50 text-neutral-900 dark:bg-neutral-900 dark:text-neutral-100">
+    <div class="min-h-screen bg-surface-muted text-foreground">
         <div class="lg:flex">
             <Sidebar class="hidden lg:flex lg:fixed lg:inset-y-0 lg:left-0" />
 
@@ -48,7 +48,7 @@ const authUser = computed<AuthUser | null>(() => {
             </Transition>
 
             <div class="min-h-screen flex-1 lg:pl-64">
-                <header class="sticky top-0 z-30 border-b border-neutral-200 bg-white/95 backdrop-blur dark:border-neutral-700 dark:bg-neutral-900/95">
+                <header class="sticky top-0 z-30 border-b border-border bg-white/95 backdrop-blur dark:bg-neutral-900/95">
                     <div class="flex h-16 items-center justify-between gap-4 px-4 sm:px-6 lg:px-8">
                         <div class="flex items-center gap-3">
                             <button
@@ -81,7 +81,7 @@ const authUser = computed<AuthUser | null>(() => {
 
                             <button
                                 type="button"
-                                class="inline-flex h-10 w-10 items-center justify-center rounded-lg text-neutral-500 transition-colors hover:bg-neutral-100 hover:text-neutral-900 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-100"
+                                class="inline-flex h-10 w-10 items-center justify-center rounded-lg text-muted transition-colors hover:bg-neutral-100 hover:text-neutral-900 dark:hover:bg-neutral-700 dark:hover:text-neutral-100"
                                 aria-label="Toggle dark mode"
                                 @click="toggleDarkMode"
                             >
@@ -93,7 +93,7 @@ const authUser = computed<AuthUser | null>(() => {
                                 <template #trigger>
                                     <button
                                         type="button"
-                                        class="inline-flex items-center gap-2 rounded-lg border border-neutral-200 bg-white px-3 py-2 text-sm font-medium text-neutral-700 transition-colors hover:bg-neutral-100 dark:border-neutral-700 dark:bg-neutral-800 dark:text-neutral-200 dark:hover:bg-neutral-700"
+                                        class="inline-flex items-center gap-2 rounded-lg border border-border bg-surface px-3 py-2 text-sm font-medium text-neutral-700 transition-colors hover:bg-neutral-100 dark:bg-neutral-800 dark:text-neutral-200 dark:hover:bg-neutral-700"
                                     >
                                         <span class="flex h-7 w-7 items-center justify-center rounded-full bg-neutral-100 text-xs font-semibold text-neutral-700">
                                             {{ authUser.name ? authUser.name.charAt(0).toUpperCase() : 'U' }}

@@ -5,6 +5,10 @@ import type { ProductData, StaffUser, OrderData } from '@/Types/pos.type';
 import { useOrderCart } from '@/Composables/useOrderCart';
 import MenuGrid from '@/Components/Pos/MenuGrid.vue';
 import OrderCart from '@/Components/Pos/OrderCart.vue';
+import BaseButton from '@/Components/BaseButton.vue';
+import BaseBadge from '@/Components/BaseBadge.vue';
+import BaseModal from '@/Components/BaseModal.vue';
+import { Clock, History, LayoutGrid, ShoppingBag, CheckCircle2 } from 'lucide-vue-next';
 
 const props = defineProps<{
     products: ProductData[];
@@ -69,7 +73,6 @@ const cartQuantityMap = computed(() => {
 function handleAddProduct(product: ProductData) {
     const success = addItem(product);
     if (!success && product.stock > 0) {
-        // Flash subtle alert if max stock reached
         formErrors.value = {
             stock: `Maximum available stock (${product.stock}) for "${product.name}" already in cart.`,
         };
@@ -103,10 +106,9 @@ function handleSubmitOrder() {
         preserveState: true,
         onSuccess: (pageObj) => {
             isSubmitting.value = false;
-            // Check if order data was returned in flash
-            const flashOrder = pageObj.props.flash?.order as OrderData | undefined;
-            if (flashOrder) {
-                completedOrder.value = flashOrder;
+            const flash = pageObj.props.flash as { order?: OrderData } | undefined;
+            if (flash?.order) {
+                completedOrder.value = flash.order;
             }
             clear();
             showMobileCart.value = false;
@@ -126,29 +128,29 @@ function dismissSuccessModal() {
 <template>
     <Head title="Barista Order Terminal — AromaPOS" />
 
-    <div class="min-h-screen bg-neutral-50 text-neutral-900 flex flex-col font-sans selection:bg-primary-100 selection:text-primary-900">
+    <div class="min-h-screen bg-surface-muted text-foreground flex flex-col font-sans selection:bg-primary-100 selection:text-primary-900">
         <!-- Top Navigation Bar -->
-        <header class="bg-white border-b border-neutral-200 px-4 py-3 flex items-center justify-between sticky top-0 z-30 shadow-sm">
+        <header class="bg-surface border-b border-border px-4 py-3 flex items-center justify-between sticky top-0 z-30 shadow-sm">
             <!-- Brand & Terminal Info -->
             <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-primary-100 text-primary-700 flex items-center justify-center font-bold shadow-sm shadow-primary-500/10">
+                <div class="w-10 h-10 rounded-xl bg-primary-100 text-primary-700 flex items-center justify-center font-bold shadow-sm shadow-primary-500/10 dark:bg-primary-900/40 dark:text-primary-400">
                     <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M18.364 5.636l-3.536 3.536m0 0a5 5 0 107.072 7.072 5 5 0 00-7.072-7.072zm0 0L12 12m-6 4a4 4 0 118 0 4 4 0 01-8 0z" />
                     </svg>
                 </div>
                 <div>
-                    <h1 class="font-display font-bold text-lg text-neutral-900 leading-none tracking-tight flex items-center gap-2">
+                    <h1 class="font-display font-bold text-lg text-foreground leading-none tracking-tight flex items-center gap-2">
                         AROMA<span class="text-primary-500">POS</span>
                     </h1>
-                    <p class="text-[11px] text-neutral-500 font-mono mt-0.5">
-                        Barista Order Terminal • Station #1 - <span class="font-bold text-primary-600 uppercase">update the pos</span>
+                    <p class="text-[11px] text-muted font-mono mt-0.5">
+                        Barista Order Terminal • Station #1
                     </p>
                 </div>
             </div>
 
             <!-- Central Live Clock & System Status -->
             <div class="hidden md:flex items-center gap-4">
-                <div class="flex items-center gap-2 px-3 py-1 bg-neutral-100 rounded-lg text-xs font-mono text-neutral-500">
+                <div class="flex items-center gap-2 px-3 py-1 bg-neutral-100 dark:bg-neutral-700 rounded-lg text-xs font-mono text-neutral-500 dark:text-neutral-300">
                     <span class="w-2 h-2 rounded-full bg-success-500 animate-pulse"></span>
                     <span>{{ currentTime }}</span>
                 </div>
@@ -157,28 +159,26 @@ function dismissSuccessModal() {
             <!-- Right Actions: Staff Info & Quick Links -->
             <div class="flex items-center gap-3">
                 <!-- Recent Orders Button -->
-                <button
+                <BaseButton
                     v-if="recentOrders && recentOrders.length > 0"
-                    type="button"
+                    variant="secondary"
+                    size="sm"
+                    :icon="History"
+                    class="hidden sm:inline-flex"
                     @click="showRecentOrdersModal = true"
-                    class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg bg-neutral-100 text-neutral-700 hover:bg-neutral-200 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
                 >
-                    <svg class="w-3.5 h-3.5 text-neutral-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    <span>Recent Orders ({{ recentOrders.length }})</span>
-                </button>
+                    Recent Orders ({{ recentOrders.length }})
+                </BaseButton>
 
                 <!-- Back to Management / Reports -->
-                <a
+                <BaseButton
+                    variant="secondary"
+                    size="sm"
+                    :icon="LayoutGrid"
                     :href="route('products.index')"
-                    class="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-semibold rounded-lg border border-neutral-200 text-neutral-500 hover:text-neutral-900 hover:bg-neutral-50 transition-colors"
                 >
-                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 10h16M4 14h16M4 18h16" />
-                    </svg>
                     <span class="hidden sm:inline">Catalog</span>
-                </a>
+                </BaseButton>
 
                 <!-- Mobile Cart Toggle Button -->
                 <button
@@ -187,12 +187,10 @@ function dismissSuccessModal() {
                     class="lg:hidden relative bg-primary-500 text-white hover:bg-primary-600 p-2 rounded-xl flex items-center justify-center font-bold"
                     aria-label="Toggle Order Cart"
                 >
-                    <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                    </svg>
+                    <ShoppingBag class="w-5 h-5" />
                     <span
                         v-if="totalUnits > 0"
-                        class="absolute -top-1 -right-1 bg-danger-500 text-white font-mono text-[10px] w-5 h-5 rounded-full flex items-center justify-center border-2 border-white"
+                        class="absolute -top-1 -right-1 bg-danger-500 text-white font-mono text-[10px] w-5 h-5 rounded-full flex items-center justify-center border-2 border-white dark:border-neutral-800"
                     >
                         {{ totalUnits }}
                     </span>
@@ -237,13 +235,13 @@ function dismissSuccessModal() {
             class="fixed inset-0 z-50 lg:hidden flex flex-col bg-neutral-900/50 backdrop-blur-sm"
         >
             <div class="flex-1" @click="showMobileCart = false"></div>
-            <div class="h-[85vh] bg-white rounded-t-2xl p-4 flex flex-col border-t border-neutral-200 shadow-2xl">
-                <div class="flex items-center justify-between pb-3 border-b border-neutral-200">
-                    <span class="font-display font-bold text-base text-neutral-900">Order Ticket (Mobile)</span>
+            <div class="h-[85vh] bg-surface rounded-t-2xl p-4 flex flex-col border-t border-border shadow-2xl">
+                <div class="flex items-center justify-between pb-3 border-b border-border">
+                    <span class="font-display font-bold text-base text-foreground">Order Ticket (Mobile)</span>
                     <button
                         type="button"
                         @click="showMobileCart = false"
-                        class="p-1 rounded-lg text-neutral-500 hover:text-neutral-900 hover:bg-neutral-100 transition-colors"
+                        class="p-1 rounded-lg text-muted hover:text-foreground hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors"
                     >
                         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -269,143 +267,112 @@ function dismissSuccessModal() {
             </div>
         </div>
 
-        <!-- Order Success Modal / Receipt Card -->
-        <div
-            v-if="completedOrder"
-            class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-neutral-900/50 backdrop-blur-sm"
+        <!-- Order Success Modal (Design System Compliant) -->
+        <BaseModal
+            :show="!!completedOrder"
+            title="Order Placed & Sent to Bar!"
+            max-width="md"
+            @close="dismissSuccessModal"
         >
-            <div class="bg-white rounded-xl border border-neutral-200 p-6 max-w-md w-full shadow-xl space-y-5 animate-in fade-in zoom-in-95 duration-200">
-                <!-- Success Header -->
-                <div class="text-center space-y-2">
-                    <div class="w-14 h-14 rounded-full bg-success-50 text-success-500 mx-auto flex items-center justify-center">
-                        <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
-                        </svg>
-                    </div>
-                    <h3 class="font-display font-bold text-xl text-neutral-900">Order Placed & Sent to Bar!</h3>
-                    <div class="font-mono text-sm bg-neutral-100 text-primary-600 font-bold px-3 py-1.5 rounded-lg inline-block border border-neutral-200">
-                        {{ completedOrder.order_number }}
-                    </div>
+            <div v-if="completedOrder" class="space-y-5 text-center">
+                <div class="w-14 h-14 rounded-full bg-success-50 text-success-500 dark:bg-success-900/20 dark:text-success-400 mx-auto flex items-center justify-center">
+                    <CheckCircle2 class="w-8 h-8" />
+                </div>
+                <div class="font-mono text-sm bg-neutral-100 text-primary-600 font-bold px-3 py-1.5 rounded-lg inline-block border border-neutral-200 dark:bg-neutral-700 dark:border-neutral-600 dark:text-primary-400">
+                    {{ completedOrder.order_number }}
                 </div>
 
                 <!-- Receipt Breakdown -->
-                <div class="bg-neutral-50 rounded-xl p-4 border border-dashed border-neutral-200 space-y-2 text-xs">
-                    <div v-if="completedOrder.customer_name" class="flex justify-between text-neutral-500">
+                <div class="bg-surface-muted rounded-xl p-4 border border-dashed border-border space-y-2 text-xs text-left">
+                    <div v-if="completedOrder.customer_name" class="flex justify-between text-muted">
                         <span>Customer:</span>
-                        <span class="text-neutral-900 font-semibold">{{ completedOrder.customer_name }}</span>
+                        <span class="text-foreground font-semibold">{{ completedOrder.customer_name }}</span>
                     </div>
-                    <div v-if="completedOrder.staff_name" class="flex justify-between text-neutral-500">
+                    <div v-if="completedOrder.staff_name" class="flex justify-between text-muted">
                         <span>Barista:</span>
-                        <span class="text-neutral-900">{{ completedOrder.staff_name }}</span>
+                        <span class="text-foreground">{{ completedOrder.staff_name }}</span>
                     </div>
-                    <div class="flex justify-between text-neutral-500">
+                    <div class="flex justify-between text-muted">
                         <span>Status:</span>
-                        <span class="capitalize text-primary-600 font-semibold">{{ completedOrder.status }}</span>
+                        <BaseBadge :status="completedOrder.status" />
                     </div>
 
-                    <div class="border-t border-dashed border-neutral-200 pt-2 space-y-1.5">
+                    <div class="border-t border-dashed border-border pt-2 space-y-1.5">
                         <div
                             v-for="(item, idx) in completedOrder.items"
                             :key="idx"
                             class="flex justify-between items-center"
                         >
-                            <span class="text-neutral-900 font-medium">
+                            <span class="text-foreground font-medium">
                                 {{ item.quantity }}x {{ item.product_name }}
                             </span>
-                            <span class="font-mono text-neutral-500">
+                            <span class="font-mono text-muted">
                                 ${{ Number(item.subtotal).toFixed(2) }}
                             </span>
                         </div>
                     </div>
 
-                    <div class="border-t border-neutral-200 pt-2 flex justify-between items-baseline">
-                        <span class="font-display font-bold text-sm text-neutral-900">Total Paid:</span>
-                        <span class="font-display font-bold text-base text-primary-600">
+                    <div class="border-t border-border pt-2 flex justify-between items-baseline">
+                        <span class="font-display font-bold text-sm text-foreground">Total Paid:</span>
+                        <span class="font-display font-bold text-base text-primary-600 dark:text-primary-400">
                             ${{ Number(completedOrder.total_amount).toFixed(2) }}
                         </span>
                     </div>
                 </div>
+            </div>
 
-                <!-- Actions -->
-                <button
-                    type="button"
+            <template #footer>
+                <BaseButton
+                    variant="primary"
+                    size="lg"
+                    full-width
                     @click="dismissSuccessModal"
-                    class="w-full bg-primary-500 text-white font-sans font-medium py-2 rounded-lg hover:bg-primary-600 active:bg-primary-700 transition-colors text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
                 >
                     Start Next Order
-                </button>
-            </div>
-        </div>
+                </BaseButton>
+            </template>
+        </BaseModal>
 
-        <!-- Recent Orders Modal -->
-        <div
-            v-if="showRecentOrdersModal"
-            class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-neutral-900/50 backdrop-blur-sm"
+        <!-- Recent Orders Modal (Design System Compliant) -->
+        <BaseModal
+            :show="showRecentOrdersModal"
+            title="Recent Orders"
+            max-width="lg"
+            @close="showRecentOrdersModal = false"
         >
-            <div class="bg-white rounded-xl border border-neutral-200 p-6 max-w-lg w-full shadow-xl space-y-4 max-h-[85vh] flex flex-col mt-20 mx-auto">
-                <div class="flex items-center justify-between border-b border-neutral-200 pb-3">
-                    <h3 class="font-display font-medium text-lg text-neutral-900 flex items-center gap-2">
-                        <svg class="w-5 h-5 text-neutral-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
-                        <span>Recent Orders</span>
-                    </h3>
-                    <button
-                        type="button"
-                        @click="showRecentOrdersModal = false"
-                        class="text-neutral-500 hover:text-neutral-900 hover:bg-neutral-100 px-2 py-1 rounded-lg transition-colors"
-                    >
-                        <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </button>
-                </div>
+            <div class="space-y-3 max-h-[60vh] overflow-y-auto pr-1">
+                <div
+                    v-for="order in recentOrders"
+                    :key="order.id"
+                    class="p-3.5 bg-surface-muted rounded-lg border border-border space-y-2"
+                >
+                    <div class="flex items-center justify-between">
+                        <span class="font-mono font-medium text-xs text-primary-600 dark:text-primary-400">
+                            {{ order.order_number }}
+                        </span>
+                        <BaseBadge :status="order.status" />
+                    </div>
 
-                <div class="flex-1 overflow-y-auto space-y-3 pr-1">
-                    <div
-                        v-for="order in recentOrders"
-                        :key="order.id"
-                        class="p-3.5 bg-neutral-50 rounded-lg border border-neutral-200 space-y-2"
-                    >
-                        <div class="flex items-center justify-between">
-                            <span class="font-mono font-medium text-xs text-primary-600">
-                                {{ order.order_number }}
-                            </span>
-                            <span
-                                :class="[
-                                    'inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium',
-                                    order.status === 'completed' ? 'bg-success-50 text-success-600' :
-                                    order.status === 'preparing' ? 'bg-primary-50 text-primary-600' :
-                                    order.status === 'cancelled' ? 'bg-danger-50 text-danger-600' :
-                                    order.status === 'error' ? 'bg-danger-50 text-danger-600' :
-                                    'bg-warning-50 text-warning-600'
-                                ]"
-                            >
-                                {{ order.status }}
-                            </span>
-                        </div>
+                    <div class="text-xs text-muted flex items-center justify-between">
+                        <span>{{ order.customer_name || 'Walk-in Customer' }}</span>
+                        <span class="font-mono font-semibold text-foreground">
+                            ${{ Number(order.total_amount).toFixed(2) }}
+                        </span>
+                    </div>
 
-                        <div class="text-xs text-neutral-500 flex items-center justify-between">
-                            <span>{{ order.customer_name || 'Walk-in Customer' }}</span>
-                            <span class="font-mono font-semibold text-neutral-900">
-                                ${{ Number(order.total_amount).toFixed(2) }}
-                            </span>
-                        </div>
-
-                        <div class="text-[11px] text-neutral-400 truncate">
-                            {{ order.items.map(i => `${i.quantity}x ${i.product_name}`).join(', ') }}
-                        </div>
+                    <div class="text-[11px] text-neutral-400 dark:text-neutral-500 truncate">
+                        {{ order.items.map(i => `${i.quantity}x ${i.product_name}`).join(', ') }}
                     </div>
                 </div>
-
-                <button
-                    type="button"
-                    @click="showRecentOrdersModal = false"
-                    class="w-full bg-neutral-100 hover:bg-neutral-200 text-neutral-700 py-2 rounded-lg text-sm font-medium transition-colors"
-                >
-                    Close
-                </button>
             </div>
-        </div>
+
+            <template #footer>
+                <div class="flex justify-end w-full">
+                    <BaseButton variant="secondary" @click="showRecentOrdersModal = false">
+                        Close
+                    </BaseButton>
+                </div>
+            </template>
+        </BaseModal>
     </div>
 </template>

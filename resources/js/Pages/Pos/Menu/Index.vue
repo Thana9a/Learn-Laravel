@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import OrderScreen from '@/Pages/Pos/OrderScreen.vue';
+import type { ProductData, StaffUser, OrderData } from '@/Types/pos.type';
 
 defineProps<{
-    products: any[];
+    products: ProductData[];
     categories: string[];
-    staffUsers?: any[];
-    recentOrders?: any[];
-    activeStaff?: any | null;
+    staffUsers?: StaffUser[];
+    recentOrders?: OrderData[];
+    activeStaff?: StaffUser | null;
 }>();
 </script>
 

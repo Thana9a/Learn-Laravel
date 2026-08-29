@@ -12,12 +12,12 @@ const { isDark } = useDarkMode();
     >
         <div>
             <Link href="/">
-                <ApplicationLogo class="h-20 w-20 fill-current text-neutral-500 dark:text-neutral-400" />
+                <ApplicationLogo class="h-20 w-20 fill-current text-muted" />
             </Link>
         </div>
 
         <div
-            class="mt-6 w-full overflow-hidden bg-white px-6 py-4 shadow-md sm:max-w-md sm:rounded-lg dark:bg-neutral-800"
+            class="mt-6 w-full overflow-hidden bg-surface px-6 py-4 shadow-md sm:max-w-md sm:rounded-lg"
         >
             <slot />
         </div>
