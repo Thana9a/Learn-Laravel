@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted, computed, type Component } from 'vue';
-import { Link, usePage, Head } from '@inertiajs/vue3';
+import { Link, Head } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import StatCard from '@/Components/StatCard.vue';
 import QuickActionCard from '@/Components/QuickActionCard.vue';
@@ -10,123 +9,29 @@ import DashboardHeader from '@/Components/DashboardHeader.vue';
 import RecentOrdersTable from '@/Components/RecentOrdersTable.vue';
 import BaseText from '@/Components/BaseText.vue';
 import { usePermission } from '@/Composables/usePermission';
+import { useDashboard, type DashboardStat } from '@/Composables/useDashboard';
+import type { RecentOrder } from '@/Types/order.type';
 import {
   Coffee,
   Receipt,
   ShoppingBag,
   BarChart3,
-  TrendingUp,
-  Package,
   Users
 } from 'lucide-vue-next';
 import en from '@/lang/en'; // Standard translation object as per AGENTS_FRONT_END.md
 
-// Note: If you implement a locale switcher later, you can make this reactive based on page.props.locale
 const t = en.dashboard;
 const { can } = usePermission();
 
-// Define Props
-interface Stat {
-  label: string;
-  value: string | number;
-  trend?: string;
-  icon?: string | Component;
-}
-
-interface OrderItem {
-  id: number;
-  product_name: string;
-  quantity: number;
-  unit_price: number;
-}
-
-interface RecentOrder {
-  id: number;
-  order_number: string;
-  status: string;
-  total_amount: number;
-  created_at: string;
-  items: OrderItem[];
-  items_count?: number;
-}
-
-interface Props {
-  stats?: Stat[];
+const props = withDefaults(defineProps<{
+  stats?: DashboardStat[];
   recentOrders?: RecentOrder[];
-}
-
-const props = withDefaults(defineProps<Props>(), {
+}>(), {
   stats: () => [],
   recentOrders: () => [],
 });
 
-const page = usePage();
-
-/**
- * Computed userName — resolves the authenticated user name safely.
- * Moved out of the template to avoid vue-tsc TS1109 error from `as` casts
- * inside template interpolations (TypeScript `as` is not valid in template expressions).
- */
-const userName = computed<string>(() => {
-  const auth = page.props.auth as { user?: { name?: string } } | undefined;
-  return auth?.user?.name ?? 'User';
-});
-
-const iconComponents: Record<string, Component> = {
-  TrendingUp,
-  Receipt,
-  Package,
-  BarChart3,
-};
-
-// Computed stats with translated labels if none provided
-const displayStats = computed(() => {
-  if (props.stats.length > 0) return props.stats;
-  
-  return [
-    { label: t.stats.today_sales, value: '$0.00', trend: '+0%', icon: TrendingUp },
-    { label: t.stats.orders_today, value: '0', trend: '+0%', icon: Receipt },
-    { label: t.stats.active_products, value: '0', icon: Package },
-  ];
-});
-
-const resolveIcon = (icon?: string | Component): Component => {
-  if (typeof icon === 'string') {
-    return iconComponents[icon] ?? BarChart3;
-  }
-
-  return icon ?? BarChart3;
-};
-
-// Current Date and Time Logic
-const currentDate = ref('');
-const currentTime = ref('');
-let timer: ReturnType<typeof setInterval>;
-
-const updateTime = () => {
-  const now = new Date();
-  currentDate.value = now.toLocaleDateString(undefined, {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  });
-  currentTime.value = now.toLocaleTimeString(undefined, {
-    hour: '2-digit',
-    minute: '2-digit'
-  });
-};
-
-onMounted(() => {
-  updateTime();
-  timer = setInterval(updateTime, 1000);
-});
-
-onUnmounted(() => {
-  clearInterval(timer);
-});
-
-// statusClasses removed: BaseBadge component handles semantic status coloring automatically.
+const { userName, displayStats, resolveIcon, currentDate, currentTime } = useDashboard(props.stats);
 </script>
 
 <template>

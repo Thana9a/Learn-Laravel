@@ -1,11 +1,13 @@
 <script setup lang="ts">
-import { computed, ref } from 'vue';
-import { Head, router } from '@inertiajs/vue3';
+import { toRef } from 'vue';
+import { Head } from '@inertiajs/vue3';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import BaseButton from '@/Components/BaseButton.vue';
 import BaseModal from '@/Components/BaseModal.vue';
 import PageHeader from '@/Components/PageHeader.vue';
 import type { ProductItem, ProductStatsData, ProductFilterParams } from '@/Types/product.type';
+import { useProductsList } from '@/Composables/useProductsList';
+import { PRODUCT_FILTER_ALL } from '@/Constants/product.constant';
 import ProductStats from './ProductStats.vue';
 import ProductFilters from './ProductFilters.vue';
 import ProductTable from './ProductTable.vue';
@@ -22,62 +24,26 @@ const props = withDefaults(
     filters?: ProductFilterParams;
   }>(),
   {
-    filters: () => ({ search: '', category: 'All' }),
+    filters: () => ({ search: '', category: PRODUCT_FILTER_ALL }),
   }
 );
 
 const t = en.product;
 const common = en.common;
 
-const search = ref(props.filters.search ?? '');
-const selectedCategory = ref(props.filters.category ?? 'All');
-const showDeleteModal = ref(false);
-const productToDelete = ref<ProductItem | null>(null);
-
-const lowStockProducts = computed(() =>
-  props.products.filter((p) => p.stock < 10).slice(0, 5)
-);
-
-const inStockCount = computed(
-  () => props.products.filter((p) => p.stock > 0).length
-);
-
-function applyFilters() {
-  router.get(
-    route('products.index'),
-    {
-      search: search.value,
-      category: selectedCategory.value,
-    },
-    {
-      preserveState: true,
-      replace: true,
-    }
-  );
-}
-
-function clearFilters() {
-  search.value = '';
-  selectedCategory.value = 'All';
-  applyFilters();
-}
-
-function promptDelete(product: ProductItem) {
-  productToDelete.value = product;
-  showDeleteModal.value = true;
-}
-
-function confirmDelete() {
-  if (!productToDelete.value) return;
-
-  router.delete(route('products.destroy', productToDelete.value.id), {
-    preserveScroll: true,
-    onSuccess: () => {
-      showDeleteModal.value = false;
-      productToDelete.value = null;
-    },
-  });
-}
+const {
+  search,
+  selectedCategory,
+  showDeleteModal,
+  productToDelete,
+  lowStockProducts,
+  inStockCount,
+  applyFilters,
+  clearFilters,
+  promptDelete,
+  confirmDelete,
+  cancelDelete,
+} = useProductsList(toRef(props, 'products'), props.filters);
 </script>
 
 <template>
@@ -144,7 +110,7 @@ function confirmDelete() {
     :show="showDeleteModal"
     :title="t.delete_product"
     max-width="md"
-    @close="showDeleteModal = false"
+    @close="cancelDelete"
   >
     <p class="text-sm text-neutral-600 dark:text-neutral-300">
       {{ t.dashboard.confirm_delete.replace(':name', productToDelete?.name ?? '') }}
@@ -152,7 +118,7 @@ function confirmDelete() {
 
     <template #footer>
       <div class="flex items-center justify-between w-full">
-        <BaseButton variant="secondary" @click="showDeleteModal = false">
+        <BaseButton variant="secondary" @click="cancelDelete">
           {{ common.actions.cancel }}
         </BaseButton>
         <BaseButton variant="danger" @click="confirmDelete">

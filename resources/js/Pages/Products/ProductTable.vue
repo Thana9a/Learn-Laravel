@@ -6,6 +6,7 @@ import DataTable, { type DataTableColumn } from '@/Components/DataTable.vue';
 import BaseBadge from '@/Components/BaseBadge.vue';
 import BaseButton from '@/Components/BaseButton.vue';
 import type { ProductItem } from '@/Types/product.type';
+import { resolveStockStatus, PRODUCT_LOW_STOCK_THRESHOLD } from '@/Constants/product.constant';
 import en from '@/lang/en';
 import { Trash2 } from 'lucide-vue-next';
 
@@ -19,15 +20,9 @@ const emit = defineEmits<{
 
 const t = en.product;
 
-function resolveStockStatus(stock: number): string {
-  if (stock === 0) return 'out_of_stock';
-  if (stock < 10) return 'low_stock';
-  return 'in_stock';
-}
-
 function resolveStockLabel(stock: number): string {
   if (stock === 0) return t.dashboard.status.out;
-  if (stock < 10) return t.dashboard.status.low;
+  if (stock < PRODUCT_LOW_STOCK_THRESHOLD) return t.dashboard.status.low;
   return t.dashboard.status.ready;
 }
 

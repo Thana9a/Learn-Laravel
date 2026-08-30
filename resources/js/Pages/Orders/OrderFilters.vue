@@ -4,6 +4,7 @@ import BaseInput from '@/Components/BaseInput.vue';
 import BaseSelect from '@/Components/BaseSelect.vue';
 import BaseButton from '@/Components/BaseButton.vue';
 import en from '@/lang/en';
+import { ORDER_SORT_FIELDS, ORDER_STATUSES } from '@/Constants/order.constant';
 import { Filter, Search } from 'lucide-vue-next';
 
 defineProps<{
@@ -23,20 +24,23 @@ const emit = defineEmits<{
 const t = en.order;
 const common = en.common;
 
-const statusOptions = [
-  { label: t.dashboard.filters.all, value: 'all' },
-  { label: t.status.pending, value: 'pending' },
-  { label: t.status.preparing, value: 'preparing' },
-  { label: t.status.completed, value: 'completed' },
-  { label: t.dashboard.filters.paid, value: 'paid' },
-  { label: t.status.cancelled, value: 'cancelled' },
-];
+const statusLabel: Record<string, string> = {
+  all: t.dashboard.filters.all,
+  pending: t.status.pending,
+  preparing: t.status.preparing,
+  completed: t.status.completed,
+  paid: t.dashboard.filters.paid,
+  cancelled: t.status.cancelled,
+};
 
-const sortOptions = [
-  { label: t.dashboard.filters.sort_created, value: 'created_at' },
-  { label: t.dashboard.filters.sort_total, value: 'total_amount' },
-  { label: t.dashboard.filters.sort_order_number, value: 'order_number' },
-];
+const sortLabel: Record<string, string> = {
+  created_at: t.dashboard.filters.sort_created,
+  total_amount: t.dashboard.filters.sort_total,
+  order_number: t.dashboard.filters.sort_order_number,
+};
+
+const statusOptions = ORDER_STATUSES.map((value) => ({ label: statusLabel[value], value }));
+const sortOptions = ORDER_SORT_FIELDS.map((value) => ({ label: sortLabel[value], value }));
 </script>
 
 <template>

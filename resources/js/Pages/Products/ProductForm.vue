@@ -7,6 +7,7 @@ import BaseSelect from '@/Components/BaseSelect.vue';
 import BaseButton from '@/Components/BaseButton.vue';
 import BaseTextarea from '@/Components/BaseTextarea.vue';
 import BaseCheckbox from '@/Components/BaseCheckbox.vue';
+import { PRODUCT_DEFAULT_CATEGORY } from '@/Constants/product.constant';
 import en from '@/lang/en';
 import { Check, Plus, Star } from 'lucide-vue-next';
 
@@ -22,7 +23,7 @@ const t = en.product;
 
 const form = useForm({
   name: '',
-  category: props.categories[0] ?? 'Coffee',
+  category: props.categories[0] ?? PRODUCT_DEFAULT_CATEGORY,
   price: '',
   stock: 0,
   description: '',
@@ -35,7 +36,7 @@ function submitProduct() {
     preserveScroll: true,
     onSuccess: () => {
       form.reset();
-      form.category = props.categories[0] ?? 'Coffee';
+      form.category = props.categories[0] ?? PRODUCT_DEFAULT_CATEGORY;
       emit('created');
     },
   });

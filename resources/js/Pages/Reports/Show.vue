@@ -12,25 +12,7 @@ import CardContent from '@/Components/CardContent.vue';
 import { useReportResults } from '@/Composables/useReportResults';
 import en from '@/lang/en';
 import { ArrowLeft, Calendar, FileText } from 'lucide-vue-next';
-
-interface ReportResult {
-  total_sales: number;
-  total_orders: number;
-  average_order_value: number;
-  total_products: number;
-  top_categories: { category: string; count: number; revenue: number }[];
-  generated_at: string;
-}
-
-interface Report {
-  id: number;
-  title: string;
-  type: string;
-  status: string;
-  generated_at: string | null;
-  created_at: string;
-  result: ReportResult | null;
-}
+import type { Report } from '@/Types/report.type';
 
 defineProps<{
   report: Report;

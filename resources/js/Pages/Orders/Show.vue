@@ -6,40 +6,10 @@ import BaseCard from '@/Components/BaseCard.vue';
 import CardFooter from '@/Components/CardFooter.vue';
 import BaseBadge from '@/Components/BaseBadge.vue';
 import BaseButton from '@/Components/BaseButton.vue';
+import type { OrderDetail } from '@/Types/order.type';
+import { useOrderFormat } from '@/Composables/useOrderFormat';
 import en from '@/lang/en';
 import { ArrowLeft, Printer, Calendar, User, Clock, Receipt } from 'lucide-vue-next';
-
-interface OrderItem {
-  id: number;
-  product_name: string;
-  quantity: number;
-  unit_price: number | string;
-  subtotal: number | string;
-}
-
-interface OrderDiscount {
-  id: number;
-  code_used: string;
-  amount_applied: number | string;
-}
-
-interface OrderStaff {
-  id: number;
-  name: string;
-}
-
-interface OrderDetail {
-  id: number;
-  order_number: string;
-  status: string;
-  total_amount: number | string;
-  customer_name?: string | null;
-  notes?: string | null;
-  created_at: string;
-  items: OrderItem[];
-  staff?: OrderStaff | null;
-  order_discounts?: OrderDiscount[];
-}
 
 const props = defineProps<{
   order: OrderDetail;
@@ -47,20 +17,7 @@ const props = defineProps<{
 
 const t = en.order;
 const common = en.common;
-
-function formatCurrency(val: number | string): string {
-  return `$${Number(val).toFixed(2)}`;
-}
-
-function formatDate(val: string): string {
-  return new Date(val).toLocaleString([], {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-  });
-}
+const { money: formatCurrency, formatFullDate: formatDate } = useOrderFormat();
 
 function printReceipt() {
   window.print();

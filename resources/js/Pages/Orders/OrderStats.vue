@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { computed } from 'vue';
 import StatCard from '@/Components/StatCard.vue';
 import type { OrderStatsData } from '@/Types/order.type';
+import { useOrderStats } from '@/Composables/useOrderStats';
+import { useOrderFormat } from '@/Composables/useOrderFormat';
 import en from '@/lang/en';
 import { AlertTriangle, ArrowUp, Banknote, Receipt } from 'lucide-vue-next';
 
@@ -10,15 +11,8 @@ const props = defineProps<{
 }>();
 
 const t = en.order;
-
-const completionRate = computed(() => {
-  if (props.stats.total_orders === 0) return 0;
-  return Math.round((props.stats.completed_orders / props.stats.total_orders) * 100);
-});
-
-function money(val: number | string): string {
-  return `$${Number(val).toFixed(2)}`;
-}
+const { completionRate } = useOrderStats(props.stats);
+const { money } = useOrderFormat();
 </script>
 
 <template>

@@ -1,6 +1,5 @@
-import type { TableColumn } from '@/Components/BaseTable.vue';
 import type { Report } from '@/Types/report.type';
-import en from '@/lang/en';
+import { REPORT_TABLE_COLUMNS } from '@/Constants/report.constant';
 
 /**
  * useReportsTable — table-specific config & logic for the Reports table.
@@ -10,15 +9,7 @@ import en from '@/lang/en';
  * template presentational by moving config/computed logic here.
  */
 export function useReportsTable() {
-  const t = en.report;
-
-  const columns: TableColumn[] = [
-    { key: 'title', label: t.dashboard.table.report },
-    { key: 'type', label: t.dashboard.table.type },
-    { key: 'status', label: t.dashboard.table.status, align: 'center' },
-    { key: 'created_at', label: t.dashboard.table.created },
-    { key: 'actions', label: t.dashboard.table.actions, align: 'right' },
-  ];
+  const columns = REPORT_TABLE_COLUMNS;
 
   /**
    * Whether a "view results" action button should be offered for this report —

@@ -5,6 +5,7 @@ import BaseInput from '@/Components/BaseInput.vue';
 import BaseSelect from '@/Components/BaseSelect.vue';
 import BaseButton from '@/Components/BaseButton.vue';
 import en from '@/lang/en';
+import { PRODUCT_FILTER_ALL } from '@/Constants/product.constant';
 import { Filter, Search } from 'lucide-vue-next';
 
 const props = defineProps<{
@@ -23,7 +24,7 @@ const emit = defineEmits<{
 const t = en.product;
 const common = en.common;
 
-const categoryOptions = computed(() => ['All', ...props.categories]);
+const categoryOptions = computed(() => [PRODUCT_FILTER_ALL, ...props.categories]);
 </script>
 
 <template>

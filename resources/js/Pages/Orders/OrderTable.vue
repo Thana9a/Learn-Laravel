@@ -9,6 +9,7 @@ import BaseButton from '@/Components/BaseButton.vue';
 import BasePagination from '@/Components/BasePagination.vue';
 import BaseText from '@/Components/BaseText.vue';
 import type { OrderRecord, PaginatedOrders } from '@/Types/order.type';
+import { useOrderFormat } from '@/Composables/useOrderFormat';
 import en from '@/lang/en';
 import { ArrowDown, ArrowUp, Eye, Trash2 } from 'lucide-vue-next';
 
@@ -25,24 +26,10 @@ const emit = defineEmits<{
 
 const t = en.order;
 const common = en.common;
-
-function money(val: number | string): string {
-  return `$${Number(val).toFixed(2)}`;
-}
+const { money, formatDate } = useOrderFormat();
 
 function itemCount(order: OrderRecord): number {
   return order.items?.reduce((sum, item) => sum + item.quantity, 0) ?? 0;
-}
-
-function formatDate(val?: string | null): string {
-  if (!val) return t.dashboard.table.no_date;
-
-  return new Date(val).toLocaleString([], {
-    month: 'short',
-    day: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit',
-  });
 }
 </script>
 

@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, onUnmounted } from 'vue';
-import { Head, router, usePage } from '@inertiajs/vue3';
+import { Head } from '@inertiajs/vue3';
 import type { ProductData, StaffUser, OrderData } from '@/Types/pos.type';
-import { useOrderCart } from '@/Composables/useOrderCart';
+import { usePosTerminal } from '@/Composables/usePosTerminal';
 import MenuGrid from '@/Components/Pos/MenuGrid.vue';
 import OrderCart from '@/Components/Pos/OrderCart.vue';
 import BaseButton from '@/Components/BaseButton.vue';
@@ -18,7 +17,6 @@ const props = defineProps<{
     activeStaff?: StaffUser | null;
 }>();
 
-const page = usePage();
 const {
     items,
     customerName,
@@ -26,103 +24,21 @@ const {
     staffId,
     total,
     totalUnits,
-    addItem,
     updateQuantity,
     removeItem,
     clear,
-} = useOrderCart();
-
-// Initialize active staff if available and not yet set
-if (props.activeStaff && !staffId.value) {
-    staffId.value = props.activeStaff.id;
-}
-
-const isSubmitting = ref(false);
-const formErrors = ref<Record<string, string>>({});
-const showMobileCart = ref(false);
-const completedOrder = ref<OrderData | null>(null);
-const showRecentOrdersModal = ref(false);
-const currentTime = ref('');
-
-// Live clock
-let clockTimer: ReturnType<typeof setInterval> | null = null;
-function updateClock() {
-    const now = new Date();
-    currentTime.value = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-}
-
-onMounted(() => {
-    updateClock();
-    clockTimer = setInterval(updateClock, 1000);
-});
-
-onUnmounted(() => {
-    if (clockTimer) clearInterval(clockTimer);
-});
-
-// Map of product_id -> quantity currently in cart
-const cartQuantityMap = computed(() => {
-    const map: Record<number, number> = {};
-    for (const item of items.value) {
-        map[item.product.id] = item.quantity;
-    }
-    return map;
-});
-
-// Add product to cart handler
-function handleAddProduct(product: ProductData) {
-    const success = addItem(product);
-    if (!success && product.stock > 0) {
-        formErrors.value = {
-            stock: `Maximum available stock (${product.stock}) for "${product.name}" already in cart.`,
-        };
-        setTimeout(() => {
-            if (formErrors.value.stock) {
-                delete formErrors.value.stock;
-            }
-        }, 3000);
-    }
-}
-
-// Submit order via Inertia POST
-function handleSubmitOrder() {
-    if (items.value.length === 0 || isSubmitting.value) return;
-
-    isSubmitting.value = true;
-    formErrors.value = {};
-
-    const payload = {
-        staff_id: staffId.value,
-        customer_name: customerName.value.trim() || null,
-        notes: notes.value.trim() || null,
-        items: items.value.map(item => ({
-            product_id: item.product.id,
-            quantity: item.quantity,
-        })),
-    };
-
-    router.post(route('pos.orders.store'), payload, {
-        preserveScroll: true,
-        preserveState: true,
-        onSuccess: (pageObj) => {
-            isSubmitting.value = false;
-            const flash = pageObj.props.flash as { order?: OrderData } | undefined;
-            if (flash?.order) {
-                completedOrder.value = flash.order;
-            }
-            clear();
-            showMobileCart.value = false;
-        },
-        onError: (errors) => {
-            isSubmitting.value = false;
-            formErrors.value = errors;
-        },
-    });
-}
-
-function dismissSuccessModal() {
-    completedOrder.value = null;
-}
+    isSubmitting,
+    formErrors,
+    showMobileCart,
+    completedOrder,
+    showRecentOrdersModal,
+    currentTime,
+    cartQuantityMap,
+    handleAddProduct,
+    handleSubmitOrder,
+    dismissSuccessModal,
+    toggleMobileCart,
+} = usePosTerminal(props.activeStaff);
 </script>
 
 <template>
@@ -183,7 +99,7 @@ function dismissSuccessModal() {
                 <!-- Mobile Cart Toggle Button -->
                 <button
                     type="button"
-                    @click="showMobileCart = !showMobileCart"
+                    @click="toggleMobileCart"
                     class="lg:hidden relative bg-primary-500 text-white hover:bg-primary-600 p-2 rounded-xl flex items-center justify-center font-bold"
                     aria-label="Toggle Order Cart"
                 >

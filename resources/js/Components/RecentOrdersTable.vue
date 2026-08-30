@@ -2,25 +2,9 @@
 import { Link } from '@inertiajs/vue3';
 import DataTable, { type DataTableColumn } from '@/Components/DataTable.vue';
 import BaseBadge from '@/Components/BaseBadge.vue';
+import type { RecentOrder } from '@/Types/order.type';
 import { ArrowRight } from 'lucide-vue-next';
 import { computed } from 'vue';
-
-interface OrderItem {
-  id: number;
-  product_name: string;
-  quantity: number;
-  unit_price: number;
-}
-
-interface RecentOrder {
-  id: number;
-  order_number: string;
-  status: string;
-  total_amount: number;
-  created_at: string;
-  items: OrderItem[];
-  items_count?: number;
-}
 
 const props = withDefaults(defineProps<{
   orders: RecentOrder[];

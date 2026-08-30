@@ -1,3 +1,4 @@
+import type { Component } from 'vue';
 export interface ReportCategorySummary {
   category: string;
   count: number;
@@ -29,4 +30,18 @@ export interface ReportStatsData {
   processing: number;
   failed: number;
   pending: number;
+}
+
+export type ReportTypeValue = 'sales' | 'inventory' | 'performance';
+
+export interface ReportTypeOption {
+  value: ReportTypeValue;
+  label: string;
+  description: string;
+  icon: Component;
+}
+
+export interface ReportFormCallbacks {
+  onSuccess: () => void;
+  onError: () => void;
 }
