@@ -70,6 +70,16 @@
     --chart-4: 43 74% 66%;
     --chart-5: 27 87% 67%;
     --radius: 0.5rem;
+
+    /* Sidebar palette (same mapping as the tokens above). */
+    --sidebar-background: 0 0% 100%; /* white / surface */
+    --sidebar-foreground: 240 5.9% 10%; /* neutral-900 */
+    --sidebar-primary: 24.6 95% 53.1%; /* primary-500 */
+    --sidebar-primary-foreground: 0 0% 100%; /* white */
+    --sidebar-accent: 240 4.8% 96.1%; /* neutral-100 */
+    --sidebar-accent-foreground: 240 5.9% 10%; /* neutral-900 */
+    --sidebar-border: 240 5.9% 90%; /* neutral-200 */
+    --sidebar-ring: 24.6 95% 53.1%; /* primary-500 */
 }
 
 .dark {
@@ -92,6 +102,15 @@
     --border: 240 5.2% 26.1%; /* neutral-700 #3f3f46 */
     --input: 240 5.2% 26.1%; /* neutral-700 #3f3f46 */
     --ring: 24.6 95% 53.1%; /* primary-500 #f97316 */
+
+    --sidebar-background: 240 5.9% 10%; /* neutral-900 */
+    --sidebar-foreground: 240 4.8% 95.9%; /* neutral-100 */
+    --sidebar-primary: 24.6 95% 53.1%; /* primary-500 */
+    --sidebar-primary-foreground: 0 0% 100%; /* white */
+    --sidebar-accent: 240 3.7% 15.9%; /* neutral-800 */
+    --sidebar-accent-foreground: 240 4.8% 95.9%; /* neutral-100 */
+    --sidebar-border: 240 5.2% 26.1%; /* neutral-700 */
+    --sidebar-ring: 24.6 95% 53.1%; /* primary-500 */
 }
 
 @layer base {

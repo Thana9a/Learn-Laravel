@@ -67,6 +67,8 @@ const common = {
     settings: 'Settings',
     profile: 'Profile',
     logout: 'Log Out',
+    collapse_sidebar: 'Collapse sidebar',
+    expand_sidebar: 'Expand sidebar',
   },
 } as const;
 

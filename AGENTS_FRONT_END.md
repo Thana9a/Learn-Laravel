@@ -68,7 +68,7 @@ style — study existing code first, then match it.
                  `useReportStats.ts`, `useReportsTable.ts`, `useReportForm.ts`,
                  `useReportResults.ts`.
 - Constants:    `resources/js/Constants/<feature>.constant.ts`
-                 e.g. `darkMode.constant.ts`, `config/menu.ts`
+                 e.g. `darkMode.constant.ts`, `config/navigation.ts`
 - Schemas:      `resources/js/Schemas/<feature>.schema.ts`
                  (Zod is used here, e.g. `darkMode.schema.ts`)
 - Types:        `resources/js/Types/<feature>.type.ts`
@@ -266,7 +266,7 @@ the design system), `NavLink`/`ResponsiveNavLink` (layout nav).
 
 ### Other / layout & POS
 
-- `Sidebar` — left nav (reads `@/config/menu` + `usePermission`). Non-generic app shell.
+- `AppSidebar` — left nav (reads `@/config/navigation` + `usePermission`). Non-generic app shell built from the shadcn-vue sidebar primitives. Menu entries are configuration only — add the route/page separately.
 - `ApplicationLogo` — brand/logo mark.
 - `Pos/*` (POS screen building blocks):
   - `CategoryTabs` — `categories[], activeCategory`, `update:activeCategory` emit.
@@ -297,7 +297,8 @@ feature-by-feature. **Dashboard.vue is the reference implementation.**
   (Tailwind-v3-compatible); `components.json` is configured, aliases point at
   `@/Components/ui`.
 - Available now: `badge`, `button`, `card`, `checkbox`, `dialog`, `input`,
-  `label`, `pagination`, `select`, `table`, `textarea`.
+  `label`, `pagination`, `select`, `separator`, `sheet`, `sidebar`, `skeleton`,
+  `table`, `textarea`, `tooltip`.
 - `cn()` helper: `resources/js/lib/utils.ts` (clsx + tailwind-merge).
 - Status → badge mapping: `resources/js/lib/status.ts`
   (`statusBadgeClass`, `statusDotClass`, `statusLabel`) — use with `<Badge variant="outline">`.
@@ -312,6 +313,9 @@ feature-by-feature. **Dashboard.vue is the reference implementation.**
 **Migration status**
 - Done: `Pages/Dashboard.vue` (ui/card, ui/button, ui/table, ui/badge,
   `lib/status`; hardcoded headers moved into `lang/en|km/dashboard.ts`).
+- Done: app shell — `AppSidebar.vue` renders `config/navigation.ts` with the
+  shadcn-vue sidebar primitives; menu items are grouped, permission-filtered,
+  and support nested active routes.
 - Removed permanently: `DashboardHeader`, `QuickActionCard`, `RevenueChartCard`,
   `StaffPerformanceCard`, `RecentOrdersTable`, `Card.vue` (wrapper),
   `BaseResizablePanel.vue` + `useResizablePanel.ts`, `NavLink`, `ResponsiveNavLink`.

@@ -67,6 +67,8 @@ const common = {
     settings: 'ការកំណត់',
     profile: 'គណនី',
     logout: 'ចាកចេញ',
+    collapse_sidebar: 'បង្រួមរបារចំហៀង',
+    expand_sidebar: 'ពង្រីករបារចំហៀង',
   },
 } as const;
 
