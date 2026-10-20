@@ -86,7 +86,7 @@ function itemLabel(item: MenuItem): string {
       </div>
       <div>
         <h1 class="font-semibold text-foreground leading-tight">Coffee POS</h1>
-        <p class="text-xs text-muted">Staff Dashboard</p>
+        <p class="text-xs text-muted-foreground">Staff Dashboard</p>
       </div>
     </div>
 
@@ -127,7 +127,7 @@ function itemLabel(item: MenuItem): string {
         </div>
         <div class="flex-1 min-w-0">
           <p class="text-sm font-medium text-foreground truncate">{{ authUser.name }}</p>
-          <p class="text-xs text-muted truncate">{{ authUser.email }}</p>
+          <p class="text-xs text-muted-foreground truncate">{{ authUser.email }}</p>
         </div>
       </div>
     </div>

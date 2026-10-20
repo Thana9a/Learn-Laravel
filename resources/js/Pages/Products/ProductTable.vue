@@ -66,7 +66,7 @@ const rows = computed(() =>
     >
       <template #cell-name="{ row }">
         <div class="font-medium text-foreground">{{ row.name }}</div>
-        <div class="max-w-sm truncate text-xs text-muted">
+        <div class="max-w-sm truncate text-xs text-muted-foreground">
           {{ row.description || t.dashboard.table.no_description }}
         </div>
       </template>
@@ -82,7 +82,7 @@ const rows = computed(() =>
           variant="ghost"
           size="icon"
           :icon="Trash2"
-          class="text-muted hover:bg-danger-50 hover:text-danger-600 dark:hover:bg-danger-900/20"
+          class="text-muted-foreground hover:bg-danger-50 hover:text-danger-600 dark:hover:bg-danger-900/20"
           :aria-label="`${t.delete_product} ${row.name}`"
           @click="emit('delete', row._product as ProductItem)"
         />

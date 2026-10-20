@@ -35,9 +35,18 @@ export function useOrderFormat() {
     });
   }
 
+  /** Format an ISO date as a short local time (HH:MM). */
+  function formatTime(val: string): string {
+    return new Date(val).toLocaleTimeString([], {
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  }
+
   return {
     money,
     formatDate,
     formatFullDate,
+    formatTime,
   };
 }

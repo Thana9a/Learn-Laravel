@@ -116,7 +116,7 @@ onUnmounted(() => {
                 </h3>
                 <p
                   v-if="subtitle"
-                  class="text-xs text-muted mt-0.5"
+                  class="text-xs text-muted-foreground mt-0.5"
                 >
                   {{ subtitle }}
                 </p>
@@ -127,7 +127,7 @@ onUnmounted(() => {
             <button
               v-if="closeable"
               type="button"
-              class="rounded-lg p-2 text-muted transition-colors hover:bg-neutral-100 hover:text-neutral-900 dark:hover:bg-neutral-700 dark:hover:text-neutral-100 focus-visible:outline-none"
+              class="rounded-lg p-2 text-muted-foreground transition-colors hover:bg-neutral-100 hover:text-neutral-900 dark:hover:bg-neutral-700 dark:hover:text-neutral-100 focus-visible:outline-none"
               aria-label="Close dialog"
               @click="handleClose"
             >

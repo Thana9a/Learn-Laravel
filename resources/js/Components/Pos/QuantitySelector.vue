@@ -34,7 +34,7 @@ function increment() {
             type="button"
             @click.stop="decrement"
             :disabled="disabled || modelValue <= min"
-            class="w-7 h-7 flex items-center justify-center rounded text-muted hover:bg-neutral-100 hover:text-foreground dark:hover:bg-neutral-700 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed disabled:active:scale-100 transition-colors focus-visible:outline-none"
+            class="w-7 h-7 flex items-center justify-center rounded text-muted-foreground hover:bg-neutral-100 hover:text-foreground dark:hover:bg-neutral-700 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed disabled:active:scale-100 transition-colors focus-visible:outline-none"
             aria-label="Decrease quantity"
         >
             <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
@@ -50,7 +50,7 @@ function increment() {
             type="button"
             @click.stop="increment"
             :disabled="disabled || modelValue >= max"
-            class="w-7 h-7 flex items-center justify-center rounded text-muted hover:bg-neutral-100 hover:text-foreground dark:hover:bg-neutral-700 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed disabled:active:scale-100 transition-colors focus-visible:outline-none"
+            class="w-7 h-7 flex items-center justify-center rounded text-muted-foreground hover:bg-neutral-100 hover:text-foreground dark:hover:bg-neutral-700 active:scale-95 disabled:opacity-30 disabled:cursor-not-allowed disabled:active:scale-100 transition-colors focus-visible:outline-none"
             aria-label="Increase quantity"
         >
             <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">

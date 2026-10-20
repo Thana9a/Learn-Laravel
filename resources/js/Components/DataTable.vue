@@ -34,7 +34,7 @@ function cellAlignment(col: DataTableColumn): string {
 function cellClass(col: DataTableColumn): string {
   const classes = ['px-6', 'py-4'];
   classes.push(cellAlignment(col));
-  if (col.format === 'time') classes.push('text-muted');
+  if (col.format === 'time') classes.push('text-muted-foreground');
   if (col.format === 'currency') classes.push('font-mono', 'font-medium', 'text-foreground');
   return classes.join(' ');
 }
@@ -68,7 +68,7 @@ function rowKeyValue(row: Record<string, unknown>, index: number): string | numb
   <BaseCard :flush="true">
     <div class="overflow-x-auto">
       <table class="w-full text-left text-sm whitespace-nowrap">
-        <thead class="bg-surface-muted border-b border-border text-muted">
+        <thead class="bg-surface-muted border-b border-border text-muted-foreground">
           <tr>
             <th
               v-for="col in columns"
@@ -82,7 +82,7 @@ function rowKeyValue(row: Record<string, unknown>, index: number): string | numb
         </thead>
         <tbody class="divide-y divide-border text-body">
           <tr v-if="rows.length === 0">
-            <td :colspan="columns.length" class="px-6 py-8 text-center text-muted">
+            <td :colspan="columns.length" class="px-6 py-8 text-center text-muted-foreground">
               {{ emptyMessage }}
             </td>
           </tr>

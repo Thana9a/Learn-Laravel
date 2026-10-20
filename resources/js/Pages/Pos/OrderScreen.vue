@@ -58,7 +58,7 @@ const {
                     <h1 class="font-display font-bold text-lg text-foreground leading-none tracking-tight flex items-center gap-2">
                         AROMA<span class="text-primary-500">POS</span>
                     </h1>
-                    <p class="text-[11px] text-muted font-mono mt-0.5">
+                    <p class="text-[11px] text-muted-foreground font-mono mt-0.5">
                         Barista Order Terminal • Station #1
                     </p>
                 </div>
@@ -157,7 +157,7 @@ const {
                     <button
                         type="button"
                         @click="showMobileCart = false"
-                        class="p-1 rounded-lg text-muted hover:text-foreground hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors"
+                        class="p-1 rounded-lg text-muted-foreground hover:text-foreground hover:bg-neutral-100 dark:hover:bg-neutral-700 transition-colors"
                     >
                         <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -200,15 +200,15 @@ const {
 
                 <!-- Receipt Breakdown -->
                 <div class="bg-surface-muted rounded-xl p-4 border border-dashed border-border space-y-2 text-xs text-left">
-                    <div v-if="completedOrder.customer_name" class="flex justify-between text-muted">
+                    <div v-if="completedOrder.customer_name" class="flex justify-between text-muted-foreground">
                         <span>Customer:</span>
                         <span class="text-foreground font-semibold">{{ completedOrder.customer_name }}</span>
                     </div>
-                    <div v-if="completedOrder.staff_name" class="flex justify-between text-muted">
+                    <div v-if="completedOrder.staff_name" class="flex justify-between text-muted-foreground">
                         <span>Barista:</span>
                         <span class="text-foreground">{{ completedOrder.staff_name }}</span>
                     </div>
-                    <div class="flex justify-between text-muted">
+                    <div class="flex justify-between text-muted-foreground">
                         <span>Status:</span>
                         <BaseBadge :status="completedOrder.status" />
                     </div>
@@ -222,7 +222,7 @@ const {
                             <span class="text-foreground font-medium">
                                 {{ item.quantity }}x {{ item.product_name }}
                             </span>
-                            <span class="font-mono text-muted">
+                            <span class="font-mono text-muted-foreground">
                                 ${{ Number(item.subtotal).toFixed(2) }}
                             </span>
                         </div>
@@ -269,7 +269,7 @@ const {
                         <BaseBadge :status="order.status" />
                     </div>
 
-                    <div class="text-xs text-muted flex items-center justify-between">
+                    <div class="text-xs text-muted-foreground flex items-center justify-between">
                         <span>{{ order.customer_name || 'Walk-in Customer' }}</span>
                         <span class="font-mono font-semibold text-foreground">
                             ${{ Number(order.total_amount).toFixed(2) }}

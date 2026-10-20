@@ -63,14 +63,14 @@ function printReceipt() {
               </h1>
               <BaseBadge :status="order.status" />
             </div>
-            <p class="text-xs text-muted mt-1 flex items-center gap-2">
+            <p class="text-xs text-muted-foreground mt-1 flex items-center gap-2">
               <Calendar class="h-3.5 w-3.5" />
               {{ formatDate(order.created_at) }}
             </p>
           </div>
 
           <div class="text-left sm:text-right">
-            <p class="text-xs text-muted">{{ t.total_amount }}</p>
+            <p class="text-xs text-muted-foreground">{{ t.total_amount }}</p>
             <p class="text-2xl font-bold font-mono text-primary-600">
               {{ formatCurrency(order.total_amount) }}
             </p>
@@ -107,7 +107,7 @@ function printReceipt() {
 
           <div class="overflow-x-auto rounded-lg border border-border">
             <table class="w-full text-left text-sm">
-              <thead class="bg-surface-muted/60 text-xs text-muted border-b border-border">
+              <thead class="bg-surface-muted/60 text-xs text-muted-foreground border-b border-border">
                 <tr>
                   <th class="px-4 py-3 font-medium">{{ t.items }}</th>
                   <th class="px-4 py-3 text-right font-medium">{{ t.quantity }}</th>
@@ -119,7 +119,7 @@ function printReceipt() {
                 <tr v-for="item in order.items" :key="item.id" class="h-12">
                   <td class="px-4 py-3 font-medium">{{ item.product_name }}</td>
                   <td class="px-4 py-3 text-right font-mono">{{ item.quantity }}</td>
-                  <td class="px-4 py-3 text-right font-mono text-muted">{{ formatCurrency(item.unit_price) }}</td>
+                  <td class="px-4 py-3 text-right font-mono text-muted-foreground">{{ formatCurrency(item.unit_price) }}</td>
                   <td class="px-4 py-3 text-right font-mono font-medium text-foreground">{{ formatCurrency(item.subtotal) }}</td>
                 </tr>
               </tbody>

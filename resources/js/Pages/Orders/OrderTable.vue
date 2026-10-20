@@ -127,7 +127,7 @@ function itemCount(order: OrderRecord): number {
               variant="ghost"
               size="icon"
               :icon="Trash2"
-              class="text-muted hover:bg-danger-50 hover:text-danger-600 dark:hover:bg-danger-900/20"
+              class="text-muted-foreground hover:bg-danger-50 hover:text-danger-600 dark:hover:bg-danger-900/20"
               :aria-label="`${common.actions.delete} ${order.order_number}`"
               @click="emit('delete', order)"
             />

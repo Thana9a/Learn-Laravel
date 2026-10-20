@@ -39,7 +39,7 @@ withDefaults(defineProps<BaseTableProps>(), {
     <table class="w-full text-left text-sm whitespace-nowrap">
       <!-- Sticky Header -->
       <thead
-        class="sticky top-0 z-10 border-b border-border bg-surface text-xs font-medium text-muted select-none"
+        class="sticky top-0 z-10 border-b border-border bg-surface text-xs font-medium text-muted-foreground select-none"
       >
         <slot name="header">
           <tr v-if="columns && columns.length">
@@ -65,7 +65,7 @@ withDefaults(defineProps<BaseTableProps>(), {
         <tr v-if="empty">
           <td
             :colspan="columns?.length || 10"
-            class="px-4 py-12 text-center text-sm text-muted"
+            class="px-4 py-12 text-center text-sm text-muted-foreground"
           >
             <slot name="empty">
               {{ emptyMessage }}

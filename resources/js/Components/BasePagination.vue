@@ -83,7 +83,7 @@ const resolvedTotal = () => props.total ?? props.meta?.total ?? 0;
     </div>
 
     <!-- Center Info (Showing X-Y of Z / Page N) -->
-    <div class="text-xs text-muted select-none">
+    <div class="text-xs text-muted-foreground select-none">
       <slot>
         <span v-if="resolvedTotal() > 0">
           {{ showingLabel }} {{ resolvedFrom() }}-{{ resolvedTo() }} of {{ resolvedTotal() }}

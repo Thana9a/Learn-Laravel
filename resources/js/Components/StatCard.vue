@@ -19,7 +19,7 @@ withDefaults(defineProps<Props>(), {
 <template>
   <BaseCard>
     <div class="flex items-center justify-between">
-      <p class="text-sm font-medium text-muted">{{ label }}</p>
+      <p class="text-sm font-medium text-muted-foreground">{{ label }}</p>
       <component :is="icon" v-if="icon" class="h-5 w-5" :class="iconColorClass" />
     </div>
     
@@ -30,6 +30,6 @@ withDefaults(defineProps<Props>(), {
       </span>
     </div>
     
-    <p v-if="hint" class="mt-1 text-xs text-muted">{{ hint }}</p>
+    <p v-if="hint" class="mt-1 text-xs text-muted-foreground">{{ hint }}</p>
   </BaseCard>
 </template>

@@ -12,7 +12,7 @@ const { isDark } = useDarkMode();
     >
         <div>
             <Link href="/">
-                <ApplicationLogo class="h-20 w-20 fill-current text-muted" />
+                <ApplicationLogo class="h-20 w-20 fill-current text-muted-foreground" />
             </Link>
         </div>
 

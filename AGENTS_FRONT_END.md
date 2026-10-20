@@ -66,7 +66,7 @@ style — study existing code first, then match it.
                  Always prefix "use". Existing: `useDarkMode.ts`,
                  `usePermission.ts`, `useOrderCart.ts`, `usePolling.ts`,
                  `useReportStats.ts`, `useReportsTable.ts`, `useReportForm.ts`,
-                 `useReportResults.ts`, `useResizablePanel.ts`.
+                 `useReportResults.ts`.
 - Constants:    `resources/js/Constants/<feature>.constant.ts`
                  e.g. `darkMode.constant.ts`, `config/menu.ts`
 - Schemas:      `resources/js/Schemas/<feature>.schema.ts`
@@ -131,7 +131,7 @@ For light/dark support, reuse the semantic tokens declared as CSS variables in
 `resources/css/app.css` (`:root` = light, `.dark` = dark) and wired into
 `tailwind.config.js` `theme.extend.colors`. Use ONE token class instead of
 writing paired `light dark:` utility classes (e.g. `text-neutral-500
-dark:text-neutral-400` → `text-muted`). Mapping (pixel-identical to the
+dark:text-neutral-400` → `text-muted-foreground`). Mapping (pixel-identical to the
 original pairs):
 | Token | = light / dark | Use for |
 |---|---|---|
@@ -139,7 +139,8 @@ original pairs):
 | `bg-surface-muted` | `bg-neutral-50` / `bg-neutral-900` | inset / muted background |
 | `text-foreground` | `text-neutral-900` / `text-neutral-100` | primary text / headings |
 | `text-body` | `text-neutral-700` / `text-neutral-300` | body text |
-| `text-muted` | `text-neutral-500` / `text-neutral-400` | labels / helper text |
+| `text-muted-foreground` | `text-neutral-500` / `text-neutral-400` | labels / helper text |
+| `bg-muted` | `bg-neutral-100` / `bg-neutral-800` | subtle fills (shadcn `bg-muted`) |
 | `border-border` | `border-neutral-200` / `border-neutral-700` | borders / dividers |
 
 Rules: status colors (success/warning/danger/info), translucent surfaces
@@ -164,7 +165,7 @@ All design-system components use `defineProps<T>()` / `defineEmits<T>()` typed
 API (no `any`) and conform to the `neutral-*` / `primary-*` / `success-*` /
 `warning-*` / `danger-*` / `info-*` token palette in DESIGN_SYSTEM.md.
 
-### Design-system components (USE THESE)
+### Design-system components (legacy `Base*` — use only in not-yet-migrated screens; new UI uses `Components/ui/*` below)
 
 | Component | Purpose |
 |---|---|
@@ -182,12 +183,12 @@ API (no `any`) and conform to the `neutral-*` / `primary-*` / `success-*` /
 | `BaseCheckbox` | Row-style toggle with optional icon. `modelValue: boolean`, `label`, `icon`. Emits `update:modelValue`. |
 | `BaseModal` | Modal overlay (Teleport). `show`, `title`, `subtitle`, `maxWidth: sm\|md\|lg\|xl\|2xl`, `closeable`. Slots: default body, `header`, `footer`. Emits `close`. Esc + backdrop close, body-scroll lock. |
 | `BasePagination` | Table footer pagination. Props `meta` (Laravel paginator) **or** raw `prevUrl/nextUrl/currentPage/from/to/total`, plus `prevLabel/nextLabel/showingLabel`. Default slot overrides center "Showing X-Y of Z". |
-| `InfoList` | **Generic** (`<script setup generic="T extends { id: string\|number }">`) list container for labelled-row cards. Props `items: T[]`, `emptyMessage`. Renders `space-y-3` list of items or the empty state. Slots: `#item` scoped `{ item: T, index }` (full row markup — caller owns styling), `#empty` (custom empty state; defaults to `emptyMessage`). Used by `StaffPerformanceCard` and `ProductRestockAlert`; each caller supplies its own row + empty markup via typed slots (no boolean prop explosion). |
+| `InfoList` | **Generic** (`<script setup generic="T extends { id: string\|number }">`) list container for labelled-row cards. Props `items: T[]`, `emptyMessage`. Renders `space-y-3` list of items or the empty state. Slots: `#item` scoped `{ item: T, index }` (full row markup — caller owns styling), `#empty` (custom empty state; defaults to `emptyMessage`). Used by `ProductRestockAlert`; each caller supplies its own row + empty markup via typed slots (no boolean prop explosion). |
 | `BaseListRow` | Label (+ optional sublabel) on the left, value on the right. Props `label`, `sublabel?`, `value?: string\|number`, `mono?: boolean` (font-mono for currency/numeric values). Renders `flex items-center justify-between gap-4 px-4 py-3 text-sm`. Used for report category breakdowns (Reports Show + ReportDetailModal). |
 | `StatCard` | KPI stat card. `label`, `value`, `hint`, `trend`, `icon`, `iconColorClass` (default `text-primary-500`). Icon top-right, label above value, hint/trend below. |
 | `StatMiniCard` | Compact KPI stat block (muted `xs` label + `xl` value inside `BaseCard padding="sm"` on `bg-surface-muted`). Props `label`, `value: string\|number`, `mono?: boolean`. Used in report KPI grids. |
 
-### Tables (custom — NOT TanStack Table)
+### Tables (custom — upgrade to TanStack Table (`@tanstack/vue-table`) is the agreed direction; migrate per-screen)
 
 Two table approaches exist. Match whichever the feature already uses:
 
@@ -251,11 +252,6 @@ types imported from `@/Types/`):
 ### Page / layout / dashboard widgets
 
 - `PageHeader` | page title block. `eyebrow`, `title`, `subtitle`, `actions` slot (right-aligned).
-- `DashboardHeader` | dashboard hero header. `title`, `greeting`, `currentDate`, `currentTime`, `actions` slot.
-- `QuickActionCard` | link-style action tile. `href`, `icon`, `title`, `description`, `colorClass: primary\|info\|warning\|success`.
-- `RevenueChartCard` | chart placeholder widget. `href`, `title`, `subtitle`, `linkLabel`.
-- `StaffPerformanceCard` | staff leaderboard list. `title`, `subtitle`, `staff: {id,initials,name,metric,value}[]`, `emptyText`, `icon`. Uses `InfoList` with custom `#item` (avatar row) + `#empty`.
-- `RecentOrdersTable` | dashboard recent-orders widget (title + "View All" + table). Wraps `DataTable`. Props `orders`, `title`, `viewAllLabel`, `emptyMessage`, `columns` (translated labels).
 
 ### Legacy Breeze components (default Laravel starter — DO NOT use for new UI)
 
@@ -291,11 +287,35 @@ the design system), `NavLink`/`ResponsiveNavLink` (layout nav).
    slot (`#cell-<key>`, `<slot name="actions">`, etc.) with a typed context
    object — don't bolt on dozens of boolean props.
 
-## New shared primitives — PENDING SENIOR REVIEW (do not treat as approved catalog entries)
-- `BaseResizablePanel.vue` + `useResizablePanel.ts` — new reusable resizable
-  split-panel primitive (two `#left`/`#right` slots, draggable divider, optional
-  `localStorage` persistence via `storageKey`). Created fresh; NOT yet reviewed
-  or added to the catalog tables above. **Flagged for the senior developer to
-  review and add to this catalog (and DESIGN_SYSTEM.md) once approved** — the
-  senior applies the exact wording, don't self-patch these shared-convention
-  docs while it's still unapproved.
+## shadcn-vue primitives (migration in progress — new UI MUST use these)
+
+The hand-rolled `Base*` set is being replaced by shadcn-vue components,
+feature-by-feature. **Dashboard.vue is the reference implementation.**
+
+- Primitives live in `resources/js/Components/ui/<name>/`. Add more with:
+  `npx shadcn-vue@latest add <name>` — registry style is `new-york`
+  (Tailwind-v3-compatible); `components.json` is configured, aliases point at
+  `@/Components/ui`.
+- Available now: `badge`, `button`, `card`, `checkbox`, `dialog`, `input`,
+  `label`, `pagination`, `select`, `table`, `textarea`.
+- `cn()` helper: `resources/js/lib/utils.ts` (clsx + tailwind-merge).
+- Status → badge mapping: `resources/js/lib/status.ts`
+  (`statusBadgeClass`, `statusDotClass`, `statusLabel`) — use with `<Badge variant="outline">`.
+- Icons: keep `lucide-vue-next`. Do NOT add `@lucide/vue` (the CLI may try; remove it).
+- Theme: shadcn HSL vars in `resources/css/app.css` are mapped 1:1 onto the
+  existing palette (`--primary` = `#f97316`), dark mode stays class-based (`.dark`).
+- This registry ships UI components only — no “blocks” (dashboard-01, login-01,
+  sidebar-07, …). Compose screens from `ui/*` primitives + the existing shell.
+- Composed screens use `Card`/`CardHeader`/`CardContent` + `Table` primitives;
+  put shared status/format logic in `lib/`, page-specific logic in `Composables/`.
+
+**Migration status**
+- Done: `Pages/Dashboard.vue` (ui/card, ui/button, ui/table, ui/badge,
+  `lib/status`; hardcoded headers moved into `lang/en|km/dashboard.ts`).
+- Removed permanently: `DashboardHeader`, `QuickActionCard`, `RevenueChartCard`,
+  `StaffPerformanceCard`, `RecentOrdersTable`, `Card.vue` (wrapper),
+  `BaseResizablePanel.vue` + `useResizablePanel.ts`, `NavLink`, `ResponsiveNavLink`.
+- Removed with replacement: `text-muted` → `text-muted-foreground` (59 usages).
+- Pending: Products, Orders, Reports, POS, Auth/Profile screens still use the
+  legacy `Base*` set — port them next, then delete each `Base*` once its last
+  usage is gone (do not add new usages of `Base*` in the meantime).

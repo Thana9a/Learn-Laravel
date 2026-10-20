@@ -1,15 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Fraunces:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&family=Public+Sans:wght@400;500;600;700&display=swap');
 
+@import url('https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&display=swap');
+
+/*
+ ---break---
+ */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 /*
- * Semantic color tokens for dark mode.
+ * Application semantic color tokens for dark mode (rgb triplets).
  *
- * Components reference these as utility classes (e.g. `text-muted`,
- * `bg-surface`, `border-border`) instead of writing paired light/dark
- * classes. Values mirror this repo's existing neutral-* palette:
+ * Components reference these as utility classes (e.g. `text-muted-foreground`,
+ * `bg-surface`, `border-border`) instead of writing paired light/dark classes.
+ * Values mirror this repo's existing neutral-* palette:
  *   - foreground    = neutral-900  / neutral-100  (primary text)
  *   - body          = neutral-700  / neutral-300  (body text)
  *   - muted         = neutral-500  / neutral-400  (labels / helper text)
@@ -33,4 +37,72 @@
     --color-body: 212 212 216; /* neutral-300 #d4d4d8 */
     --color-muted: 161 161 170; /* neutral-400 #a1a1aa */
     --color-border: 63 63 70; /* neutral-700 #3f3f46 */
+}
+
+/*
+ * shadcn-vue tokens (HSL triplets) for `resources/js/Components/ui/`.
+ * Values are mapped 1:1 onto this repo's palette above so shadcn-vue and the
+ * existing Base* components render identical colors while both coexist.
+ */
+:root {
+    --background: 0 0% 98%; /* neutral-50 */
+    --foreground: 240 5.9% 10%; /* neutral-900 */
+    --card: 0 0% 100%; /* white */
+    --card-foreground: 240 5.9% 10%; /* neutral-900 */
+    --popover: 0 0% 100%; /* white */
+    --popover-foreground: 240 5.9% 10%; /* neutral-900 */
+    --primary: 24.6 95% 53.1%; /* primary-500 #f97316 */
+    --primary-foreground: 0 0% 100%; /* white */
+    --secondary: 240 4.8% 96.1%; /* neutral-100 */
+    --secondary-foreground: 240 5.3% 26.1%; /* neutral-700 */
+    --muted: 240 4.8% 96.1%; /* neutral-100 */
+    --muted-foreground: 240 3.8% 46.1%; /* neutral-500 */
+    --accent: 240 4.8% 96.1%; /* neutral-100 */
+    --accent-foreground: 240 5.9% 10%; /* neutral-900 */
+    --destructive: 0 84.2% 60.2%; /* danger-500 #ef4444 */
+    --destructive-foreground: 0 0% 100%; /* white */
+    --border: 240 5.9% 90%; /* neutral-200 #e4e4e7 */
+    --input: 240 5.9% 90%; /* neutral-200 #e4e4e7 */
+    --ring: 24.6 95% 53.1%; /* primary-500 #f97316 */
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+}
+
+.dark {
+    --background: 240 5.9% 10%; /* neutral-900 */
+    --foreground: 240 4.8% 95.9%; /* neutral-100 */
+    --card: 240 3.7% 15.9%; /* neutral-800 */
+    --card-foreground: 240 4.8% 95.9%; /* neutral-100 */
+    --popover: 240 3.7% 15.9%; /* neutral-800 */
+    --popover-foreground: 240 4.8% 95.9%; /* neutral-100 */
+    --primary: 24.6 95% 53.1%; /* primary-500 #f97316 */
+    --primary-foreground: 0 0% 100%; /* white */
+    --secondary: 240 3.7% 15.9%; /* neutral-800 */
+    --secondary-foreground: 240 4.8% 95.9%; /* neutral-100 */
+    --muted: 240 3.7% 15.9%; /* neutral-800 */
+    --muted-foreground: 240 5% 64.9%; /* neutral-400 */
+    --accent: 240 3.7% 15.9%; /* neutral-800 */
+    --accent-foreground: 240 4.8% 95.9%; /* neutral-100 */
+    --destructive: 0 84.2% 60.2%; /* danger-500 #ef4444 */
+    --destructive-foreground: 0 0% 100%; /* white */
+    --border: 240 5.2% 26.1%; /* neutral-700 #3f3f46 */
+    --input: 240 5.2% 26.1%; /* neutral-700 #3f3f46 */
+    --ring: 24.6 95% 53.1%; /* primary-500 #f97316 */
+}
+
+@layer base {
+    * {
+        @apply border-border;
+    }
+
+    body {
+        @apply bg-background text-foreground;
+    }
+  .theme {
+        --font-heading: var(--font-sans);
+    }
 }

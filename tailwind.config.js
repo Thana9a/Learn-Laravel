@@ -1,5 +1,6 @@
 import defaultTheme from 'tailwindcss/defaultTheme';
 import forms from '@tailwindcss/forms';
+import animate from 'tailwindcss-animate';
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -21,6 +22,8 @@ export default {
                     500: '#f97316',
                     600: '#ea580c',
                     700: '#c2410c',
+                    DEFAULT: 'hsl(var(--primary))',
+                    foreground: 'hsl(var(--primary-foreground))',
                 },
                 neutral: {
                     50: '#fafafa',
@@ -52,18 +55,56 @@ export default {
                 },
                 surface: 'rgb(var(--color-surface) / <alpha-value>)',
                 'surface-muted': 'rgb(var(--color-surface-muted) / <alpha-value>)',
-                foreground: 'rgb(var(--color-foreground) / <alpha-value>)',
+                foreground: 'hsl(var(--foreground))',
                 body: 'rgb(var(--color-body) / <alpha-value>)',
-                muted: 'rgb(var(--color-muted) / <alpha-value>)',
-                border: 'rgb(var(--color-border) / <alpha-value>)',
+                muted: {
+                    DEFAULT: 'hsl(var(--muted))',
+                    foreground: 'hsl(var(--muted-foreground))',
+                },
+                border: 'hsl(var(--border))',
+                background: 'hsl(var(--background))',
+                card: {
+                    DEFAULT: 'hsl(var(--card))',
+                    foreground: 'hsl(var(--card-foreground))',
+                },
+                popover: {
+                    DEFAULT: 'hsl(var(--popover))',
+                    foreground: 'hsl(var(--popover-foreground))',
+                },
+                secondary: {
+                    DEFAULT: 'hsl(var(--secondary))',
+                    foreground: 'hsl(var(--secondary-foreground))',
+                },
+                accent: {
+                    DEFAULT: 'hsl(var(--accent))',
+                    foreground: 'hsl(var(--accent-foreground))',
+                },
+                destructive: {
+                    DEFAULT: 'hsl(var(--destructive))',
+                    foreground: 'hsl(var(--destructive-foreground))',
+                },
+                input: 'hsl(var(--input))',
+                ring: 'hsl(var(--ring))',
+                chart: {
+                    1: 'hsl(var(--chart-1))',
+                    2: 'hsl(var(--chart-2))',
+                    3: 'hsl(var(--chart-3))',
+                    4: 'hsl(var(--chart-4))',
+                    5: 'hsl(var(--chart-5))',
+                },
             },
             fontFamily: {
                 sans: ['"Public Sans"', ...defaultTheme.fontFamily.sans],
                 display: ['"Fraunces"', 'serif'],
                 mono: ['"IBM Plex Mono"', ...defaultTheme.fontFamily.mono],
             },
+            borderRadius: {
+                lg: 'var(--radius)',
+                md: 'calc(var(--radius) - 2px)',
+                sm: 'calc(var(--radius) - 4px)',
+            },
         },
     },
 
-    plugins: [forms],
+    plugins: [forms, animate],
 };

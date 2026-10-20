@@ -119,7 +119,7 @@ defineExpose({
     <p v-if="error" class="mt-1 text-xs text-danger-600 dark:text-danger-400">
       {{ error }}
     </p>
-    <p v-else-if="hint" class="mt-1 text-xs text-muted">
+    <p v-else-if="hint" class="mt-1 text-xs text-muted-foreground">
       {{ hint }}
     </p>
   </div>

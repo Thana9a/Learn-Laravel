@@ -20,7 +20,7 @@ withDefaults(defineProps<{
       <component :is="icon" v-if="icon" class="h-5 w-5 shrink-0" :class="iconColorClass" />
       <div class="min-w-0">
         <h2 class="text-lg font-medium text-foreground truncate">{{ title }}</h2>
-        <p v-if="subtitle" class="text-xs text-muted truncate">{{ subtitle }}</p>
+        <p v-if="subtitle" class="text-xs text-muted-foreground truncate">{{ subtitle }}</p>
       </div>
     </div>
     <div v-if="$slots.actions" class="shrink-0">

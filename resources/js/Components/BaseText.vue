@@ -60,7 +60,7 @@ const sizeClasses: Record<TextSize, string> = {
 
 const variantClasses: Record<TextVariant, string> = {
   default: 'text-foreground',
-  muted: 'text-muted',
+  muted: 'text-muted-foreground',
   error: 'text-danger-600 dark:text-danger-400',
   success: 'text-success-600 dark:text-success-400',
   warning: 'text-warning-600 dark:text-warning-400',

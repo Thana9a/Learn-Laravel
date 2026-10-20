@@ -1,10 +1,25 @@
 const dashboard = {
   welcome_back: 'Welcome back',
   launch_pos: 'Launch POS Terminal',
+  header: {
+    title: 'Today at a glance',
+  },
   stats: {
+    section_label: 'Today\'s key figures',
     today_sales: 'Today\'s Sales',
     orders_today: 'Orders Today',
     active_products: 'Active Products',
+  },
+  revenue: {
+    title: 'Revenue Overview',
+    subtitle: 'Last 7 days performance',
+    view_reports: 'View Reports',
+    placeholder: 'Chart visualization placeholder',
+  },
+  staff: {
+    title: 'Staff Performance',
+    subtitle: 'Top performing staff members',
+    empty: 'Staff management feature placeholder',
   },
   quick_actions: {
     title: 'Quick Actions',

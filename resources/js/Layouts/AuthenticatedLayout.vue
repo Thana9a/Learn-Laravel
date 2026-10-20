@@ -81,7 +81,7 @@ const authUser = computed<AuthUser | null>(() => {
 
                             <button
                                 type="button"
-                                class="inline-flex h-10 w-10 items-center justify-center rounded-lg text-muted transition-colors hover:bg-neutral-100 hover:text-neutral-900 dark:hover:bg-neutral-700 dark:hover:text-neutral-100"
+                                class="inline-flex h-10 w-10 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:bg-neutral-100 hover:text-neutral-900 dark:hover:bg-neutral-700 dark:hover:text-neutral-100"
                                 aria-label="Toggle dark mode"
                                 @click="toggleDarkMode"
                             >

@@ -28,7 +28,7 @@ withDefaults(defineProps<{
 </script>
 
 <template>
-  <div v-if="items.length === 0" class="text-sm text-muted">
+  <div v-if="items.length === 0" class="text-sm text-muted-foreground">
     <slot name="empty">
       {{ emptyMessage }}
     </slot>

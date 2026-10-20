@@ -33,10 +33,10 @@ function handleRemove() {
                 <h4 class="font-display font-semibold text-sm text-foreground truncate">
                     {{ item.product.name }}
                 </h4>
-                <div class="flex items-center gap-2 text-xs text-muted font-mono">
+                <div class="flex items-center gap-2 text-xs text-muted-foreground font-mono">
                     <span>${{ Number(item.product.price).toFixed(2) }} ea</span>
                     <span class="text-neutral-300 dark:text-neutral-600">•</span>
-                    <span :class="item.product.stock <= 5 ? 'text-danger-600' : 'text-muted'">
+                    <span :class="item.product.stock <= 5 ? 'text-danger-600' : 'text-muted-foreground'">
                         max {{ item.product.stock }}
                     </span>
                 </div>

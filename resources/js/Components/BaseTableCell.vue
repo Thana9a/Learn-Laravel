@@ -45,7 +45,7 @@ const cellClasses = computed(() => [
   alignClasses[props.align],
   sizeClasses[props.size],
   props.muted
-    ? 'text-muted'
+    ? 'text-muted-foreground'
     : 'text-body',
 ]);
 </script>

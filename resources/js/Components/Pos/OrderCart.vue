@@ -44,7 +44,7 @@ const isCartEmpty = computed(() => props.items.length === 0);
                 </div>
                 <div>
                     <h3 class="font-display font-bold text-base text-foreground">Current Order</h3>
-                    <p class="font-mono text-[11px] text-muted">
+                    <p class="font-mono text-[11px] text-muted-foreground">
                         {{ items.length }} item{{ items.length === 1 ? '' : 's' }} ({{ totalUnits }} units)
                     </p>
                 </div>
@@ -55,7 +55,7 @@ const isCartEmpty = computed(() => props.items.length === 0);
                 type="button"
                 @click="emit('clear-cart')"
                 :disabled="isSubmitting"
-                class="text-xs text-muted hover:text-danger-600 transition-colors font-medium focus-visible:outline-none"
+                class="text-xs text-muted-foreground hover:text-danger-600 transition-colors font-medium focus-visible:outline-none"
             >
                 Clear Ticket
             </button>
@@ -65,7 +65,7 @@ const isCartEmpty = computed(() => props.items.length === 0);
         <div class="p-3.5 bg-surface-muted border-b border-border space-y-2.5">
             <!-- Staff selection dropdown -->
             <div class="flex items-center justify-between gap-2">
-                <label for="pos-staff-select" class="text-xs font-semibold text-muted whitespace-nowrap">
+                <label for="pos-staff-select" class="text-xs font-semibold text-muted-foreground whitespace-nowrap">
                     Barista:
                 </label>
                 <select
@@ -136,7 +136,7 @@ const isCartEmpty = computed(() => props.items.length === 0);
             <!-- Empty Ticket Placeholder -->
             <div
                 v-else
-                class="h-full min-h-[220px] flex flex-col items-center justify-center text-center p-6 text-muted"
+                class="h-full min-h-[220px] flex flex-col items-center justify-center text-center p-6 text-muted-foreground"
             >
                 <div class="w-12 h-12 rounded-xl bg-neutral-100 dark:bg-neutral-700 flex items-center justify-center text-neutral-400 dark:text-neutral-500 mb-3">
                     <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -154,11 +154,11 @@ const isCartEmpty = computed(() => props.items.length === 0);
         <div class="p-4 bg-surface border-t border-border space-y-3">
             <!-- Receipt Dashed Cut Line -->
             <div class="border-t border-dashed border-border pt-3">
-                <div class="flex items-center justify-between text-xs text-muted">
+                <div class="flex items-center justify-between text-xs text-muted-foreground">
                     <span>Subtotal</span>
                     <span class="font-mono">${{ total.toFixed(2) }}</span>
                 </div>
-                <div class="flex items-center justify-between text-xs text-muted mt-1">
+                <div class="flex items-center justify-between text-xs text-muted-foreground mt-1">
                     <span>Tax (included)</span>
                     <span class="font-mono">$0.00</span>
                 </div>

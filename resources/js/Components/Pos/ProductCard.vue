@@ -91,7 +91,7 @@ function handleCardClick() {
         <!-- Product Info Body -->
         <div class="flex-1 p-3.5 flex flex-col justify-between">
             <div>
-                <div class="text-xs text-muted uppercase tracking-wider font-semibold mb-0.5">
+                <div class="text-xs text-muted-foreground uppercase tracking-wider font-semibold mb-0.5">
                     {{ product.category }}
                 </div>
                 <h3 class="font-display font-semibold text-foreground text-base leading-snug line-clamp-1">
@@ -111,7 +111,7 @@ function handleCardClick() {
                 <div class="font-display font-bold text-primary-600 text-lg">
                     ${{ Number(product.price).toFixed(2) }}
                 </div>
-                <div class="font-mono text-xs text-muted">
+                <div class="font-mono text-xs text-muted-foreground">
                     <span v-if="!isOutOfStock">{{ product.stock }} left</span>
                     <span v-else class="text-danger-600">0 stock</span>
                 </div>
